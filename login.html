@@ -149,5 +149,57 @@
             }, 5000);
         }
     </script>
-</body>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Simple client-side validation
+            if (!username || !password) {
+                showError('Please enter both username and password');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = document.querySelector('.btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Logging in...';
+            submitBtn.disabled = true;
+            
+            // In a real implementation, this would make an AJAX call to authenticate
+            // For now, we'll simulate authentication with a small delay
+            authenticateUser(username, password);
+        });
+        
+        function authenticateUser(username, password) {
+            // This would typically make an API call to the backend
+            // For demo purposes, we'll just redirect to dashboard after a short delay
+            console.log('Attempting to authenticate user:', username);
+            
+            // Simulate network request delay
+            setTimeout(function() {
+                // In a real system, this would validate credentials server-side
+                // and set a session cookie before redirecting
+                // For demo, we'll just redirect to client dashboard
+                window.location.href = 'client-dashboard.html';
+            }, 1500);
+        }
+        
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            // Re-enable button if it was disabled
+            const submitBtn = document.querySelector('.btn');
+            submitBtn.textContent = 'Login';
+            submitBtn.disabled = false;
+            
+            setTimeout(function() {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+    </script></body>
 </html>

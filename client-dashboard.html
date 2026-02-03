@@ -84,11 +84,20 @@
 </head>
 <body>
     <div class="container">
+        
         <header>
             <h1>Your Personal Training Dashboard</h1>
             <p>Welcome back, <span id="userName">Client Name</span>!</p>
-            <a href="logout.html" class="logout-btn">Logout</a>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <a href="index.html" style="color: white; text-decoration: none; margin-right: 15px;">Trainer Dashboard</a>
+                    <a href="calendar.html" style="color: white; text-decoration: none; margin-right: 15px;">My Calendar</a>
+                    <a href="nutrition.html" style="color: white; text-decoration: none;">My Nutrition</a>
+                </div>
+                <a href="logout.html" class="logout-btn">Logout</a>
+            </div>
         </header>
+
         
         <div class="welcome-section">
             <h2>Ready to Achieve Your Goals?</h2>
@@ -106,48 +115,35 @@
                             <th>Location</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Today, 2:00 PM</td>
-                            <td>Strength Training</td>
-                            <td>LA Fitness</td>
-                        </tr>
-                        <tr>
-                            <td>Tomorrow, 10:00 AM</td>
-                            <td>Cardio Workout</td>
-                            <td>LA Fitness</td>
-                        </tr>
-                        <tr>
-                            <td>Mar 5, 1:00 PM</td>
-                            <td>Personal Training</td>
-                            <td>LA Fitness</td>
-                        </tr>
+                    <tbody id="upcoming-sessions">
+                        <!-- Sessions loaded dynamically based on logged-in client -->
+                        <tr><td colspan="3">Loading your sessions...</td></tr>
                     </tbody>
                 </table>
             </div>
             
             <div class="dashboard-card">
                 <h3>🎯 Current Goals</h3>
-                <ul>
-                    <li>Weight Loss: 15 lbs by March 31</li>
-                    <li>Strength: Bench Press 185 lbs</li>
-                    <li>Endurance: 5K in under 25 minutes</li>
+                <ul id="current-goals">
+                    <!-- Goals loaded dynamically based on logged-in client -->
+                    <li>Loading your goals...</li>
                 </ul>
             </div>
             
             <div class="dashboard-card">
                 <h3>🥗 Nutrition Plan</h3>
-                <p><strong>Daily Calories:</strong> 1,800</p>
-                <p><strong>Protein:</strong> 140g</p>
-                <p><strong>Carbs:</strong> 180g</p>
-                <p><strong>Fat:</strong> 60g</p>
+                <div id="nutrition-plan">
+                    <!-- Nutrition plan loaded dynamically based on logged-in client -->
+                    <p>Loading your nutrition plan...</p>
+                </div>
             </div>
             
             <div class="dashboard-card">
                 <h3>📈 Recent Progress</h3>
-                <p><strong>Last Weigh-in:</strong> Feb 1, 2026 - 165.2 lbs</p>
-                <p><strong>Body Fat:</strong> 18.2%</p>
-                <p><strong>Workouts Completed:</strong> 12 of 16 this month</p>
+                <div id="progress-data">
+                    <!-- Progress data loaded dynamically based on logged-in client -->
+                    <p>Loading your progress data...</p>
+                </div>
             </div>
         </div>
         
