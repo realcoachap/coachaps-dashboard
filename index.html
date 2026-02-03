@@ -1,373 +1,141 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Trainer Dashboard - All Clients</title>
+    <title>Coach AP - Personal Training Dashboard</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        .clients-table {
+        .welcome-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
             width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
+            max-width: 500px;
+            text-align: center;
         }
-        .clients-table th, .clients-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+        .welcome-header {
+            margin-bottom: 30px;
         }
-        .clients-table th {
-            background-color: #34495e;
+        .welcome-header h1 {
+            color: #333;
+            margin: 0 0 10px 0;
+        }
+        .welcome-header p {
+            color: #666;
+            margin: 0;
+        }
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .btn {
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .btn-trainer {
+            background: #667eea;
             color: white;
         }
-        .clients-table tr:hover {
-            background-color: #f1f1f1;
+        .btn-trainer:hover {
+            background: #5a6fd8;
         }
-        .client-link {
-            color: #3498db;
-            text-decoration: none;
-            font-weight: bold;
+        .btn-client {
+            background: #4CAF50;
+            color: white;
         }
-        .client-link:hover {
-            text-decoration: underline;
+        .btn-client:hover {
+            background: #45a049;
         }
-        footer {
+        .divider {
+            margin: 20px 0;
             text-align: center;
-            padding: 20px;
-            background-color: #ecf0f1;
-            color: #7f8c8d;
+            color: #ccc;
         }
     </style>
+    
+    <script>
+        // Check if user is authenticated by looking for session token
+        function isAuthenticated() {
+            // In a real implementation, this would check for a valid session token
+            // For demo purposes, we'll use localStorage to simulate authentication
+            return localStorage.getItem('authToken') !== null;
+        }
+        
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Don't redirect on login, register, or logout pages
+            const currentPath = window.location.pathname;
+            const loginPages = ['/login.html', '/register.html', '/forgot-password.html', '/logout.html', '/landing.html'];
+            
+            if (!loginPages.some(page => currentPath.includes(page)) && !isAuthenticated()) {
+                // Redirect to login page
+                console.log('Redirecting to login - no authentication found');
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+    
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Personal Trainer Dashboard</h1>
-            <p>Unified Client Management System</p>
-        
-            <div style="text-align: center; margin-bottom: 20px;">
-                <a href="index.html">Client Dashboard</a> | 
-                <a href="schedule.html">Schedule</a> | 
-                <a href="nutrition.html">Nutrition</a> | 
-                <a href="knowledge.html">Knowledge Base</a> | 
-                <a href="books.html">Books</a> | 
-                <a href="reports.html">Reports</a>
-            </div>
-                </header>
-        
-        <div style="padding: 20px;">
-            <h2>All Clients</h2>
-            <table class="clients-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Type</th>
-                        <th>Sessions Left</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
+
+    <div id="auth-check-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: flex; justify-content: center; align-items: center; text-align: center;">
+        <div>
+            <h2>Verifying Authentication...</h2>
+            <p>Please wait while we check your authorization.</p>
+        </div>
+    </div>
+    <script>
+        // Hide overlay once auth check is complete
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const overlay = document.getElementById('auth-check-overlay');
+                if (overlay) {
+                    overlay.style.display = 'none';
+                }
+            }, 500); // Short delay to show the overlay briefly
+        });
+    </script>
     
-                    <tr>
-                        <td>29</td>
-                        <td><a href="client_29.html" class="client-link">Alexita</a></td>
-                        <td>+17868810415</td>
-                        <td>** Demo Client</td>
-                        <td>[to be added]</td>
-                        <td><a href="client_29.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>20</td>
-                        <td><a href="client_20.html" class="client-link">Alfredo Herrera</a></td>
-                        <td>(305) 469-4864</td>
-                        <td>** On Demand</td>
-                        <td>21</td>
-                        <td><a href="client_20.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>6</td>
-                        <td><a href="client_6.html" class="client-link">Ana Bolivar</a></td>
-                        <td>(786) 253-2041</td>
-                        <td>** Recurring</td>
-                        <td>3</td>
-                        <td><a href="client_6.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>13</td>
-                        <td><a href="client_13.html" class="client-link">Andres Pollan</a></td>
-                        <td>(786) 564-5304</td>
-                        <td>** Demo Client</td>
-                        <td>4</td>
-                        <td><a href="client_13.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>25</td>
-                        <td><a href="client_25.html" class="client-link">Aramis Perez</a></td>
-                        <td>(786) 623-8009</td>
-                        <td>** On Demand</td>
-                        <td>1</td>
-                        <td><a href="client_25.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>2</td>
-                        <td><a href="client_2.html" class="client-link">Arelys Bajuelos</a></td>
-                        <td>(305) 984-5483</td>
-                        <td>** Recurring</td>
-                        <td>4</td>
-                        <td><a href="client_2.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>22</td>
-                        <td><a href="client_22.html" class="client-link">Celia Leon</a></td>
-                        <td>(305) 431-9771</td>
-                        <td>** On Demand</td>
-                        <td>[to be added]</td>
-                        <td><a href="client_22.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>23</td>
-                        <td><a href="client_23.html" class="client-link">Christian Russo</a></td>
-                        <td>(786) 922-0118</td>
-                        <td>** Demo Client</td>
-                        <td>[to be added]</td>
-                        <td><a href="client_23.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>10</td>
-                        <td><a href="client_10.html" class="client-link">David Hernandez</a></td>
-                        <td>(786) 362-2946</td>
-                        <td>** On Demand</td>
-                        <td>2</td>
-                        <td><a href="client_10.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>12</td>
-                        <td><a href="client_12.html" class="client-link">Demo Clients</a></td>
-                        <td>N/A</td>
-                        <td>N/A</td>
-                        <td>N/A</td>
-                        <td><a href="client_12.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>11</td>
-                        <td><a href="client_11.html" class="client-link">Elizabeth Carrillo</a></td>
-                        <td>(786) 223-2188</td>
-                        <td>** On Demand</td>
-                        <td>3</td>
-                        <td><a href="client_11.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>3</td>
-                        <td><a href="client_3.html" class="client-link">Gabriel Neumann</a></td>
-                        <td>(786) 872-4356</td>
-                        <td>** Recurring</td>
-                        <td>4</td>
-                        <td><a href="client_3.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>24</td>
-                        <td><a href="client_24.html" class="client-link">Hanna Leiser</a></td>
-                        <td>[to be added]</td>
-                        <td>** Main Account Holder</td>
-                        <td>[to be added]</td>
-                        <td><a href="client_24.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>8</td>
-                        <td><a href="client_8.html" class="client-link">Haylee</a></td>
-                        <td>(305) 794-9353</td>
-                        <td>** Guest Pass</td>
-                        <td>[to be added]</td>
-                        <td><a href="client_8.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>1</td>
-                        <td><a href="client_1.html" class="client-link">Irina Wilkins</a></td>
-                        <td>(786) 351-9801</td>
-                        <td>** On Demand</td>
-                        <td>[to be added]</td>
-                        <td><a href="client_1.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>16</td>
-                        <td><a href="client_16.html" class="client-link">John "Cuzzo"</a></td>
-                        <td>(786) 470-4985</td>
-                        <td>** Demo Client</td>
-                        <td>4</td>
-                        <td><a href="client_16.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>14</td>
-                        <td><a href="client_14.html" class="client-link">Luis Ortega</a></td>
-                        <td>(786) 423-7006</td>
-                        <td>** Recurring</td>
-                        <td>[to be added]</td>
-                        <td><a href="client_14.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>7</td>
-                        <td><a href="client_7.html" class="client-link">Luis Vargas</a></td>
-                        <td>(786) 416-5761</td>
-                        <td>** On Demand</td>
-                        <td>1</td>
-                        <td><a href="client_7.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>9</td>
-                        <td><a href="client_9.html" class="client-link">Luz Burgos</a></td>
-                        <td>(786) 973-1349</td>
-                        <td>** On Demand</td>
-                        <td>14</td>
-                        <td><a href="client_9.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>18</td>
-                        <td><a href="client_18.html" class="client-link">Luz Gonzalez</a></td>
-                        <td>(305) 519-1181</td>
-                        <td>** Recurring</td>
-                        <td>2</td>
-                        <td><a href="client_18.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>21</td>
-                        <td><a href="client_21.html" class="client-link">Maria</a></td>
-                        <td>[to be added]</td>
-                        <td>** [to be added]</td>
-                        <td>[to be added]</td>
-                        <td><a href="client_21.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>17</td>
-                        <td><a href="client_17.html" class="client-link">Maria Cobenas</a></td>
-                        <td>(561) 589-9761</td>
-                        <td>** Recurring (LA Fitness) + Private</td>
-                        <td>2 (LA)</td>
-                        <td><a href="client_17.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>15</td>
-                        <td><a href="client_15.html" class="client-link">Mario Pestana</a></td>
-                        <td>(786) 258-4181</td>
-                        <td>** On Demand (NEW CLIENT)</td>
-                        <td>4</td>
-                        <td><a href="client_15.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>5</td>
-                        <td><a href="client_5.html" class="client-link">Mayra Ortega</a></td>
-                        <td>[to be added]</td>
-                        <td>** Guest Pass</td>
-                        <td>[to be added]</td>
-                        <td><a href="client_5.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>30</td>
-                        <td><a href="client_30.html" class="client-link">Naidaly Camacho</a></td>
-                        <td>(786) 642-9679</td>
-                        <td>** Recurring</td>
-                        <td>[to be added]</td>
-                        <td><a href="client_30.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>28</td>
-                        <td><a href="client_28.html" class="client-link">Natalia</a></td>
-                        <td>(561) 916-9343</td>
-                        <td>** Recurring (NEW)</td>
-                        <td>10</td>
-                        <td><a href="client_28.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>19</td>
-                        <td><a href="client_19.html" class="client-link">Norma Miranda</a></td>
-                        <td>(786) 683-2118</td>
-                        <td>** Recurring</td>
-                        <td>[to be added]</td>
-                        <td><a href="client_19.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>26</td>
-                        <td><a href="client_26.html" class="client-link">Shehnaz Bengali</a></td>
-                        <td>(305) 336-1945</td>
-                        <td>** Recurring</td>
-                        <td>[to be added]</td>
-                        <td><a href="client_26.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>4</td>
-                        <td><a href="client_4.html" class="client-link">Yadira</a></td>
-                        <td>[to be added]</td>
-                        <td>** Guest Pass</td>
-                        <td>[to be added]</td>
-                        <td><a href="client_4.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                    <tr>
-                        <td>27</td>
-                        <td><a href="client_27.html" class="client-link">Yarenis Diaz</a></td>
-                        <td>(305) 333-1252</td>
-                        <td>** Recurring</td>
-                        <td>23</td>
-                        <td><a href="client_27.html" class="client-link">View Details</a></td>
-                    </tr>
-        
-                </tbody>
-            </table>
+    <div class="welcome-container">
+        <div class="welcome-header">
+            <h1>Coach AP Training Systems</h1>
+            <p>Professional Fitness & Wellness Management</p>
         </div>
         
-        <footer>
-            <p>Personal Trainer Dashboard | Generated: 2026-02-02 13:35:23</p>
-        </footer>
+        <p>Select your access level:</p>
+        
+        <div class="btn-container">
+            <a href="index.html" class="btn btn-trainer">Trainer Dashboard</a>
+            <div class="divider">OR</div>
+            <a href="login.html" class="btn btn-client">Client Portal Login</a>
+        </div>
+        
+        <div style="margin-top: 30px; font-size: 0.9em; color: #666;">
+            <p>Need help? Contact your administrator</p>
+        </div>
     </div>
 </body>
 </html>
-    
