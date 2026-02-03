@@ -353,6 +353,137 @@
             color: #7f8c8d;
         }
         
+        /* Calendar Styles */
+        .calendar-container {
+            display: none; /* Hidden by default, shown when calendar is selected */
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .calendar-btn {
+            background: #3aa9dd;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .calendar-btn:hover {
+            background: #2a98cc;
+        }
+        
+        .current-month {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        
+        .calendar-day-header {
+            text-align: center;
+            padding: 10px;
+            font-weight: 600;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .calendar-day {
+            min-height: 80px;
+            padding: 8px;
+            border: 1px solid #eee;
+            background: #fafafa;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .calendar-day:hover {
+            background: #e3f2fd;
+        }
+        
+        .calendar-day.current-month {
+            background: white;
+        }
+        
+        .calendar-day.other-month {
+            background: #f8f9fa;
+            color: #bdc3c7;
+        }
+        
+        .day-number {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .day-events {
+            font-size: 0.7rem;
+        }
+        
+        .event-badge {
+            display: inline-block;
+            background: #3aa9dd;
+            color: white;
+            padding: 2px 4px;
+            border-radius: 3px;
+            margin-bottom: 2px;
+        }
+        
+        .calendar-day.has-event {
+            border-left: 3px solid #3aa9dd;
+        }
+        
+        .selected-day-view {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            display: none;
+        }
+        
+        .day-events-list {
+            margin-top: 10px;
+        }
+        
+        .day-event {
+            padding: 8px;
+            margin-bottom: 5px;
+            background: white;
+            border-radius: 4px;
+            border-left: 3px solid #3aa9dd;
+        }
+        
+        .external-link-warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
         @media (max-width: 768px) {
             .sidebar {
                 width: 60px;
@@ -360,6 +491,16 @@
             
             .main-content {
                 margin-left: 60px;
+            }
+            
+            .calendar-grid {
+                grid-template-columns: repeat(7, 1fr);
+                font-size: 0.8rem;
+            }
+            
+            .calendar-day {
+                min-height: 60px;
+                padding: 5px;
             }
         }
     </style>
@@ -376,32 +517,36 @@
         </div>
         
         <nav class="sidebar-menu">
-            <a href="real-trainerize-dashboard.html" class="menu-item active">
+            <a href="/app/client/26604555/dash" class="menu-item active" target="_blank" rel="noopener noreferrer">
                 <i>📊</i>
                 <span class="menu-text">Dashboard</span>
             </a>
-            <a href="#" class="menu-item">
+            <a href="/app/client/26604555/trainingProgram" class="menu-item" target="_blank" rel="noopener noreferrer">
                 <i>💪</i>
                 <span class="menu-text">Training Program</span>
             </a>
-            <a href="#" class="menu-item">
+            <a href="/app/client/26604555/messages" class="menu-item" target="_blank" rel="noopener noreferrer">
                 <i>💬</i>
                 <span class="menu-text">Messages</span>
             </a>
-            <a href="#" class="menu-item">
+            <a href="/app/client/26604555/userGroups" class="menu-item" target="_blank" rel="noopener noreferrer">
                 <i>👥</i>
                 <span class="menu-text">Groups</span>
             </a>
-            <a href="#" class="menu-item">
+            <a href="/app/client/26604555/progress" class="menu-item" target="_blank" rel="noopener noreferrer">
                 <i>📈</i>
                 <span class="menu-text">Progress</span>
             </a>
-            <a href="#" class="menu-item">
+            <a href="/app/client/26604555/badges" class="menu-item" target="_blank" rel="noopener noreferrer">
                 <i>🏆</i>
                 <span class="menu-text">Badges</span>
             </a>
-            <a href="#" class="menu-item">
+            <a href="#" class="menu-item" id="calendar-menu-item">
                 <i>📅</i>
+                <span class="menu-text">Calendar</span>
+            </a>
+            <a href="/app/client/26604555/classes" class="menu-item" target="_blank" rel="noopener noreferrer">
+                <i>🏃</i>
                 <span class="menu-text">Classes</span>
             </a>
         </nav>
@@ -423,7 +568,34 @@
             </div>
         </div>
         
-        <div class="dashboard-grid">
+        <div class="external-link-warning" id="externalLinkWarning">
+            <strong>Note:</strong> This dashboard connects to your real Trainerize account. Clicking sidebar links will open the actual Trainerize pages in a new tab.
+        </div>
+        
+        <!-- Calendar Container -->
+        <div class="calendar-container" id="calendarContainer">
+            <div class="calendar-header">
+                <div class="calendar-nav">
+                    <button class="calendar-btn" onclick="prevMonth()">‹ Prev</button>
+                    <div class="current-month" id="currentMonth">February 2026</div>
+                    <button class="calendar-btn" onclick="nextMonth()">Next ›</button>
+                </div>
+            </div>
+            
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Calendar will be generated by JavaScript -->
+            </div>
+            
+            <div class="selected-day-view" id="selectedDayView">
+                <h3 id="selectedDateHeader">Events for February 3, 2026</h3>
+                <div class="day-events-list" id="dayEventsList">
+                    <!-- Events will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Dashboard Grid (shown by default) -->
+        <div class="dashboard-grid" id="dashboardGrid">
             <!-- Things to do today -->
             <div class="card">
                 <div class="card-header">
@@ -576,6 +748,212 @@
         document.addEventListener('DOMContentLoaded', function() {
             const userName = localStorage.getItem('currentUser') || 'Client';
             document.querySelector('.trainer-name').textContent = userName;
+            
+            // Initialize calendar
+            initCalendar();
+            
+            // Add event listener to calendar menu item
+            document.getElementById('calendar-menu-item').addEventListener('click', function(e) {
+                e.preventDefault();
+                showCalendar();
+            });
+            
+            // Show warning about external links
+            document.getElementById('externalLinkWarning').style.display = 'block';
+        });
+        
+        // Calendar functionality
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getFullYear();
+        
+        function initCalendar() {
+            renderCalendar(currentMonth, currentYear);
+        }
+        
+        function renderCalendar(month, year) {
+            const calendarGrid = document.getElementById('calendarGrid');
+            const currentMonthEl = document.getElementById('currentMonth');
+            
+            // Set the current month header
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                               "July", "August", "September", "October", "November", "December"];
+            currentMonthEl.textContent = `${monthNames[month]} ${year}`;
+            
+            // Clear the calendar grid
+            calendarGrid.innerHTML = '';
+            
+            // Add day headers
+            const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            dayHeaders.forEach(day => {
+                const headerCell = document.createElement('div');
+                headerCell.className = 'calendar-day-header';
+                headerCell.textContent = day;
+                calendarGrid.appendChild(headerCell);
+            });
+            
+            // Get the first day of the month and the number of days in the month
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            // Add empty cells for days before the first day of the month
+            for (let i = 0; i < firstDay; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.className = 'calendar-day other-month';
+                calendarGrid.appendChild(emptyCell);
+            }
+            
+            // Add cells for each day of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayCell = document.createElement('div');
+                dayCell.className = 'calendar-day current-month';
+                if (day === currentDate.getDate() && month === currentDate.getMonth() && year === currentDate.getFullYear()) {
+                    dayCell.classList.add('today');
+                    dayCell.style.backgroundColor = '#e3f2fd';
+                    dayCell.style.fontWeight = 'bold';
+                }
+                
+                // Check if this day has events (for demo purposes)
+                const hasEvent = checkForEvents(year, month, day);
+                if (hasEvent) {
+                    dayCell.classList.add('has-event');
+                }
+                
+                const dayNumber = document.createElement('div');
+                dayNumber.className = 'day-number';
+                dayNumber.textContent = day;
+                dayCell.appendChild(dayNumber);
+                
+                if (hasEvent) {
+                    const events = getEventsForDay(year, month, day);
+                    const eventsContainer = document.createElement('div');
+                    eventsContainer.className = 'day-events';
+                    events.forEach(event => {
+                        const eventBadge = document.createElement('div');
+                        eventBadge.className = 'event-badge';
+                        eventBadge.textContent = event.title.substring(0, 3);
+                        eventsContainer.appendChild(eventBadge);
+                    });
+                    dayCell.appendChild(eventsContainer);
+                }
+                
+                dayCell.addEventListener('click', function() {
+                    showDayDetails(year, month, day);
+                });
+                
+                calendarGrid.appendChild(dayCell);
+            }
+        }
+        
+        function prevMonth() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            renderCalendar(currentMonth, currentYear);
+        }
+        
+        function nextMonth() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar(currentMonth, currentYear);
+        }
+        
+        function checkForEvents(year, month, day) {
+            // For demo purposes, add some sample events
+            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const sampleEvents = [
+                `${currentYear}-02-03`, // Today
+                `${currentYear}-02-05`,
+                `${currentYear}-02-08`,
+                `${currentYear}-02-12`,
+                `${currentYear}-02-15`,
+                `${currentYear}-02-18`,
+                `${currentYear}-02-22`,
+                `${currentYear}-02-25`
+            ];
+            return sampleEvents.includes(dateStr);
+        }
+        
+        function getEventsForDay(year, month, day) {
+            // Return sample events for the given day
+            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const events = {
+                [`${currentYear}-02-03`]: [{title: "Morning Workout", time: "8:00 AM", type: "training"}],
+                [`${currentYear}-02-05`]: [
+                    {title: "Strength Training", time: "9:00 AM", type: "training"},
+                    {title: "Nutrition Consult", time: "2:00 PM", type: "consultation"}
+                ],
+                [`${currentYear}-02-08`]: [{title: "Cardio Session", time: "7:00 AM", type: "training"}],
+                [`${currentYear}-02-12`]: [{title: "Progress Photo", time: "10:00 AM", type: "tracking"}],
+                [`${currentYear}-02-15`]: [
+                    {title: "Yoga Class", time: "6:00 PM", type: "class"},
+                    {title: "Weekly Check-in", time: "7:00 PM", type: "consultation"}
+                ],
+                [`${currentYear}-02-18`]: [{title: "HIIT Workout", time: "8:30 AM", type: "training"}],
+                [`${currentYear}-02-22`]: [{title: "Body Composition", time: "11:00 AM", type: "tracking"}],
+                [`${currentYear}-02-25`]: [{title: "Flexibility Training", time: "7:30 AM", type: "training"}]
+            };
+            
+            return events[dateStr] || [];
+        }
+        
+        function showDayDetails(year, month, day) {
+            const monthNames = ["January", "February", "March", "April", "May", "June",
+                               "July", "August", "September", "October", "November", "December"];
+            document.getElementById('selectedDateHeader').textContent = `Events for ${monthNames[month]} ${day}, ${year}`;
+            
+            const events = getEventsForDay(year, month, day);
+            const eventsList = document.getElementById('dayEventsList');
+            eventsList.innerHTML = '';
+            
+            if (events.length > 0) {
+                events.forEach(event => {
+                    const eventEl = document.createElement('div');
+                    eventEl.className = 'day-event';
+                    eventEl.innerHTML = `
+                        <div><strong>${event.title}</strong></div>
+                        <div>${event.time} • ${event.type.charAt(0).toUpperCase() + event.type.slice(1)}</div>
+                    `;
+                    eventsList.appendChild(eventEl);
+                });
+            } else {
+                eventsList.innerHTML = '<div>No events scheduled for this day</div>';
+            }
+            
+            document.getElementById('selectedDayView').style.display = 'block';
+        }
+        
+        function showCalendar() {
+            // Hide dashboard, show calendar
+            document.getElementById('dashboardGrid').style.display = 'none';
+            document.getElementById('calendarContainer').style.display = 'block';
+            
+            // Update active menu item
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            document.getElementById('calendar-menu-item').classList.add('active');
+            document.querySelector('.page-title').textContent = 'Calendar';
+        }
+        
+        function showDashboard() {
+            // Hide calendar, show dashboard
+            document.getElementById('calendarContainer').style.display = 'none';
+            document.getElementById('dashboardGrid').style.display = 'grid';
+            
+            // Update active menu item
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            document.querySelector('#calendar-menu-item').classList.remove('active');
+            document.querySelector('.page-title').textContent = 'Dashboard';
+        }
+        
+        // Add click handler to calendar menu item to return to dashboard
+        document.getElementById('calendar-menu-item').addEventListener('click', function(e) {
+            e.preventDefault();
+            showCalendar();
         });
         
         function logout() {
