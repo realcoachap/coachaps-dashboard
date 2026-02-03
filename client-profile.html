@@ -510,6 +510,9 @@
                         <p><strong>Email:</strong> <span id="clientEmail">Loading...</span></p>
                         <p><strong>Date of Birth:</strong> <span id="clientDOB">Loading...</span></p>
                         <p><strong>Age:</strong> <span id="clientAge">Loading...</span></p>
+                        <p><strong>Height:</strong> <span id="clientHeight">Loading...</span></p>
+                        <p><strong>Weight:</strong> <span id="clientWeight">Loading...</span></p>
+                        <p><strong>Gender:</strong> <span id="clientGender">Loading...</span></p>
                         <p><strong>Occupation:</strong> <span id="clientOccupation">Loading...</span></p>
                     </div>
                 </div>
@@ -535,11 +538,40 @@
                 </div>
                 
                 <div class="profile-section">
+                    <h3 class="section-title">Fitness History</h3>
+                    <div class="section-content">
+                        <p><strong>Exercise History:</strong> <span id="exerciseHistory">Loading...</span></p>
+                        <p><strong>Equipment Access:</strong> <span id="equipmentAccess">Loading...</span></p>
+                    </div>
+                </div>
+                
+                <div class="profile-section">
                     <h3 class="section-title">Goals & Preferences</h3>
                     <div class="section-content">
                         <p><strong>Primary Goal:</strong> <span id="primaryGoal">Loading...</span></p>
+                        <p><strong>Secondary Goals:</strong> <span id="secondaryGoals">Loading...</span></p>
+                        <p><strong>Target Timeline:</strong> <span id="timeline">Loading...</span></p>
                         <p><strong>Sessions/Week:</strong> <span id="sessionsPerWeek">Loading...</span></p>
-                        <p><strong>Preferred Time:</strong> <span id="preferredTime">Loading...</span></p>
+                        <p><strong>Sessions/Month:</strong> <span id="sessionsPerMonth">Loading...</span></p>
+                        <p><strong>Preferred Days/Times:</strong> <span id="preferredDaysTimes">Loading...</span></p>
+                    </div>
+                </div>
+                
+                <div class="profile-section">
+                    <h3 class="section-title">Lifestyle</h3>
+                    <div class="section-content">
+                        <p><strong>Activity Level:</strong> <span id="activityLevel">Loading...</span></p>
+                        <p><strong>Sleep Hours:</strong> <span id="sleepHours">Loading...</span></p>
+                        <p><strong>Dietary Restrictions:</strong> <span id="dietaryRestrictions">Loading...</span></p>
+                        <p><strong>Days Exercising/Week:</strong> <span id="daysPerWeek">Loading...</span></p>
+                    </div>
+                </div>
+                
+                <div class="profile-section">
+                    <h3 class="section-title">Exercise Preferences</h3>
+                    <div class="section-content">
+                        <p><strong>Favorite Exercises:</strong> <span id="favoriteExercises">Loading...</span></p>
+                        <p><strong>Exercises to Avoid:</strong> <span id="avoidExercises">Loading...</span></p>
                     </div>
                 </div>
             </div>
@@ -571,6 +603,31 @@
                 <div class="form-group">
                     <label for="editDOB">Date of Birth</label>
                     <input type="date" id="editDOB">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editAge">Age</label>
+                    <input type="number" id="editAge" placeholder="Enter your age">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editHeight">Height</label>
+                    <input type="text" id="editHeight" placeholder="Enter your height (e.g., 5'8\")">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editWeight">Weight</label>
+                    <input type="text" id="editWeight" placeholder="Enter your weight (e.g., 150 lbs)">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editGender">Gender</label>
+                    <select id="editGender">
+                        <option value="">Select gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
                 </div>
                 
                 <div class="form-group">
@@ -609,6 +666,31 @@
             
             <div class="form-fields">
                 <div class="form-group">
+                    <label for="intakeAge">Age</label>
+                    <input type="number" id="intakeAge" placeholder="Enter your age">
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakeHeight">Height</label>
+                    <input type="text" id="intakeHeight" placeholder="Enter your height (e.g., 5'8\")">
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakeWeight">Weight</label>
+                    <input type="text" id="intakeWeight" placeholder="Enter your weight (e.g., 150 lbs)">
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakeGender">Male/Female</label>
+                    <select id="intakeGender">
+                        <option value="">Select gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
                     <label for="intakeMedicalConditions">Do you have any medical conditions?</label>
                     <textarea id="intakeMedicalConditions" placeholder="Describe any medical conditions"></textarea>
                 </div>
@@ -644,8 +726,8 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="intakeEquipmentAccess">Equipment access</label>
-                    <input type="text" id="intakeEquipmentAccess" placeholder="Describe equipment access">
+                    <label for="intakeEquipmentAccess">Do you have workout equipment access at home?</label>
+                    <input type="text" id="intakeEquipmentAccess" placeholder="Describe equipment access at home">
                 </div>
                 
                 <div class="form-group">
@@ -659,8 +741,59 @@
                 </div>
                 
                 <div class="form-group">
+                    <label for="intakeTimeline">Target timeline</label>
+                    <input type="text" id="intakeTimeline" placeholder="Describe your target timeline">
+                </div>
+                
+                <div class="form-group">
                     <label for="intakeSessionsPerWeek">Sessions per week desired</label>
                     <input type="number" id="intakeSessionsPerWeek" placeholder="Number of sessions per week">
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakeActivityLevel">Typical activity level</label>
+                    <select id="intakeActivityLevel">
+                        <option value="">Select activity level</option>
+                        <option value="sedentary">Sedentary</option>
+                        <option value="light-active">Light active</option>
+                        <option value="active">Active</option>
+                        <option value="very-active">Very active</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakeSleepHours">Sleep average</label>
+                    <input type="number" id="intakeSleepHours" placeholder="Hours of sleep per night">
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakeDietaryRestrictions">Dietary restrictions (allergies)</label>
+                    <textarea id="intakeDietaryRestrictions" placeholder="List any dietary restrictions or allergies"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakeFavoriteExercises">Favorite exercises</label>
+                    <input type="text" id="intakeFavoriteExercises" placeholder="List your favorite exercises">
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakeAvoidExercises">Exercises to avoid</label>
+                    <input type="text" id="intakeAvoidExercises" placeholder="List exercises to avoid">
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakeDaysPerWeek">How many days out of the week do you plan on exercising?</label>
+                    <input type="number" id="intakeDaysPerWeek" placeholder="Number of days per week">
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakePreferredDaysTimes">Preferred workout days of the week/time</label>
+                    <input type="text" id="intakePreferredDaysTimes" placeholder="Preferred workout days and times">
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakeSessionsPerMonth">Sessions per month</label>
+                    <input type="number" id="intakeSessionsPerMonth" placeholder="Number of sessions per month">
                 </div>
                 
                 <div class="form-actions">
@@ -730,6 +863,9 @@
             document.getElementById('clientEmail').textContent = 'client@example.com';
             document.getElementById('clientDOB').textContent = '01/15/1985';
             document.getElementById('clientAge').textContent = '35';
+            document.getElementById('clientHeight').textContent = '5\'10"';
+            document.getElementById('clientWeight').textContent = '175 lbs';
+            document.getElementById('clientGender').textContent = 'Male';
             document.getElementById('clientOccupation').textContent = 'Software Engineer';
             
             document.getElementById('emergencyName').textContent = 'Jane Doe';
@@ -742,9 +878,23 @@
             document.getElementById('allergies').textContent = 'Penicillin';
             document.getElementById('fitnessLevel').textContent = 'Intermediate';
             
+            document.getElementById('exerciseHistory').textContent = 'Some gym experience, mainly cardio';
+            document.getElementById('equipmentAccess').textContent = 'Basic dumbbells, resistance bands at home';
+            
             document.getElementById('primaryGoal').textContent = 'Weight Loss';
+            document.getElementById('secondaryGoals').textContent = 'Strength building';
+            document.getElementById('timeline').textContent = '3 months';
             document.getElementById('sessionsPerWeek').textContent = '3';
-            document.getElementById('preferredTime').textContent = 'Morning (7-9 AM)';
+            document.getElementById('sessionsPerMonth').textContent = '12';
+            document.getElementById('preferredDaysTimes').textContent = 'Mon/Wed/Fri mornings';
+            
+            document.getElementById('activityLevel').textContent = 'Light active';
+            document.getElementById('sleepHours').textContent = '7 hours';
+            document.getElementById('dietaryRestrictions').textContent = 'None';
+            document.getElementById('daysPerWeek').textContent = '4';
+            
+            document.getElementById('favoriteExercises').textContent = 'Running, push-ups, squats';
+            document.getElementById('avoidExercises').textContent = 'Heavy deadlifts (knee concern)';
         }
         
         function editProfile() {
@@ -781,6 +931,12 @@
                 document.getElementById('clientAge').textContent = age;
             }
             
+            // Update new fields
+            document.getElementById('clientAge').textContent = document.getElementById('editAge').value;
+            document.getElementById('clientHeight').textContent = document.getElementById('editHeight').value;
+            document.getElementById('clientWeight').textContent = document.getElementById('editWeight').value;
+            document.getElementById('clientGender').textContent = document.getElementById('editGender').value;
+            
             document.getElementById('clientOccupation').textContent = document.getElementById('editOccupation').value;
             document.getElementById('emergencyName').textContent = document.getElementById('editEmergencyName').value;
             document.getElementById('emergencyPhone').textContent = document.getElementById('editEmergencyPhone').value;
@@ -808,13 +964,26 @@
         
         function saveIntakeForm() {
             // Update profile with intake form values
+            document.getElementById('clientAge').textContent = document.getElementById('intakeAge').value || 'Not specified';
             document.getElementById('medicalConditions').textContent = document.getElementById('intakeMedicalConditions').value || 'None';
             document.getElementById('medications').textContent = document.getElementById('intakeMedications').value || 'None';
             document.getElementById('injuries').textContent = document.getElementById('intakeInjuries').value || 'None';
             document.getElementById('allergies').textContent = document.getElementById('intakeAllergies').value || 'None';
             document.getElementById('fitnessLevel').textContent = document.getElementById('intakeFitnessLevel').value || 'Not specified';
+            document.getElementById('exerciseHistory').textContent = document.getElementById('intakeExerciseHistory').value || 'Not specified';
+            document.getElementById('equipmentAccess').textContent = document.getElementById('intakeEquipmentAccess').value || 'Not specified';
             document.getElementById('primaryGoal').textContent = document.getElementById('intakePrimaryGoal').value || 'Not specified';
+            document.getElementById('secondaryGoals').textContent = document.getElementById('intakeSecondaryGoals').value || 'Not specified';
+            document.getElementById('timeline').textContent = document.getElementById('intakeTimeline').value || 'Not specified';
             document.getElementById('sessionsPerWeek').textContent = document.getElementById('intakeSessionsPerWeek').value || '0';
+            document.getElementById('activityLevel').textContent = document.getElementById('intakeActivityLevel').value || 'Not specified';
+            document.getElementById('sleepHours').textContent = document.getElementById('intakeSleepHours').value || 'Not specified';
+            document.getElementById('dietaryRestrictions').textContent = document.getElementById('intakeDietaryRestrictions').value || 'None';
+            document.getElementById('favoriteExercises').textContent = document.getElementById('intakeFavoriteExercises').value || 'None';
+            document.getElementById('avoidExercises').textContent = document.getElementById('intakeAvoidExercises').value || 'None';
+            document.getElementById('daysPerWeek').textContent = document.getElementById('intakeDaysPerWeek').value || '0';
+            document.getElementById('preferredDaysTimes').textContent = document.getElementById('intakePreferredDaysTimes').value || 'Not specified';
+            document.getElementById('sessionsPerMonth').textContent = document.getElementById('intakeSessionsPerMonth').value || '0';
             
             // Show success message
             alert('Intake form updated successfully!');
