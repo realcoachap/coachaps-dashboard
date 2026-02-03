@@ -3,509 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Dashboard - Coach AP</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f7fa;
-            color: #2c3e50;
-            overflow-x: hidden;
-        }
-        
-        .sidebar {
-            width: 70px;
-            background: #2c3e50;
-            color: white;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            z-index: 100;
-            transition: width 0.3s;
-        }
-        
-        .sidebar:hover {
-            width: 220px;
-        }
-        
-        .sidebar-header {
-            padding: 20px 10px;
-            text-align: center;
-            background: rgba(0,0,0,0.2);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .trainer-logo {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
-            color: #3aa9dd;
-        }
-        
-        .trainer-name {
-            font-size: 0.8rem;
-            font-weight: 600;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .sidebar-menu {
-            padding: 15px 0;
-        }
-        
-        .menu-item {
-            padding: 15px 10px;
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: #ecf0f1;
-            transition: all 0.3s;
-            border-left: 3px solid transparent;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-        
-        .menu-item:hover, .menu-item.active {
-            background: rgba(255,255,255,0.1);
-            border-left: 3px solid #3aa9dd;
-        }
-        
-        .menu-item i {
-            margin-right: 15px;
-            width: 20px;
-            text-align: center;
-            font-size: 1.2rem;
-        }
-        
-        .menu-text {
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .sidebar:hover .menu-text {
-            opacity: 1;
-        }
-        
-        .main-content {
-            margin-left: 70px;
-            padding: 20px;
-            transition: margin-left 0.3s;
-        }
-        
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #e0e6ed;
-        }
-        
-        .page-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        
-        .user-actions {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .notification-btn, .user-profile {
-            background: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .logout-btn {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.9rem;
-        }
-        
-        .logout-btn:hover {
-            background: #c0392b;
-        }
-        
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-        
-        .card {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-        }
-        
-        .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .card-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        
-        .card-icon {
-            background: #e3f2fd;
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #3aa9dd;
-        }
-        
-        .tasks-list {
-            margin-top: 10px;
-        }
-        
-        .task-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        .task-item:last-child {
-            border-bottom: none;
-        }
-        
-        .task-checkbox {
-            margin-right: 12px;
-        }
-        
-        .task-content {
-            flex: 1;
-        }
-        
-        .task-title {
-            font-weight: 500;
-            margin-bottom: 3px;
-            font-size: 0.95rem;
-        }
-        
-        .task-meta {
-            font-size: 0.8rem;
-            color: #7f8c8d;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-        
-        .stat-item {
-            text-align: center;
-            padding: 12px;
-        }
-        
-        .stat-value {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #2c3e50;
-            margin-bottom: 3px;
-        }
-        
-        .stat-label {
-            font-size: 0.8rem;
-            color: #7f8c8d;
-        }
-        
-        .progress-container {
-            margin-top: 15px;
-        }
-        
-        .progress-bar {
-            height: 6px;
-            background: #ecf0f1;
-            border-radius: 3px;
-            overflow: hidden;
-            margin-bottom: 5px;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: #3aa9dd;
-            border-radius: 3px;
-        }
-        
-        .progress-text {
-            font-size: 0.8rem;
-            color: #7f8c8d;
-            text-align: right;
-        }
-        
-        .classes-section {
-            margin-top: 15px;
-        }
-        
-        .class-item {
-            padding: 10px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        .class-item:last-child {
-            border-bottom: none;
-        }
-        
-        .class-title {
-            font-weight: 500;
-            margin-bottom: 3px;
-        }
-        
-        .class-meta {
-            font-size: 0.8rem;
-            color: #7f8c8d;
-        }
-        
-        .water-intake {
-            text-align: center;
-            padding: 15px 0;
-        }
-        
-        .water-value {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #3aa9dd;
-            margin: 5px 0;
-        }
-        
-        .water-label {
-            font-size: 0.9rem;
-            color: #7f8c8d;
-        }
-        
-        .achievements-section {
-            margin-top: 15px;
-        }
-        
-        .achievement-item {
-            display: flex;
-            align-items: center;
-            padding: 8px 0;
-        }
-        
-        .achievement-icon {
-            width: 24px;
-            height: 24px;
-            background: #f1c40f;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
-            font-size: 0.8rem;
-            color: white;
-        }
-        
-        .achievement-content {
-            flex: 1;
-        }
-        
-        .achievement-title {
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-        
-        .achievement-desc {
-            font-size: 0.8rem;
-            color: #7f8c8d;
-        }
-        
-        /* Calendar Styles */
-        .calendar-container {
-            display: none; /* Hidden by default, shown when calendar is selected */
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 25px;
-        }
-        
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .calendar-nav {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .calendar-btn {
-            background: #3aa9dd;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-        
-        .calendar-btn:hover {
-            background: #2a98cc;
-        }
-        
-        .current-month {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-        }
-        
-        .calendar-day-header {
-            text-align: center;
-            padding: 10px;
-            font-weight: 600;
-            color: #7f8c8d;
-            font-size: 0.9rem;
-        }
-        
-        .calendar-day {
-            min-height: 80px;
-            padding: 8px;
-            border: 1px solid #eee;
-            background: #fafafa;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        
-        .calendar-day:hover {
-            background: #e3f2fd;
-        }
-        
-        .calendar-day.current-month {
-            background: white;
-        }
-        
-        .calendar-day.other-month {
-            background: #f8f9fa;
-            color: #bdc3c7;
-        }
-        
-        .day-number {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        
-        .day-events {
-            font-size: 0.7rem;
-        }
-        
-        .event-badge {
-            display: inline-block;
-            background: #3aa9dd;
-            color: white;
-            padding: 2px 4px;
-            border-radius: 3px;
-            margin-bottom: 2px;
-        }
-        
-        .calendar-day.has-event {
-            border-left: 3px solid #3aa9dd;
-        }
-        
-        .selected-day-view {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 4px;
-            display: none;
-        }
-        
-        .day-events-list {
-            margin-top: 10px;
-        }
-        
-        .day-event {
-            padding: 8px;
-            margin-bottom: 5px;
-            background: white;
-            border-radius: 4px;
-            border-left: 3px solid #3aa9dd;
-        }
-        
-        .external-link-warning {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            color: #856404;
-            padding: 15px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            display: none;
-        }
-        
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 60px;
-            }
-            
-            .main-content {
-                margin-left: 60px;
-            }
-            
-            .calendar-grid {
-                grid-template-columns: repeat(7, 1fr);
-                font-size: 0.8rem;
-            }
-            
-            .calendar-day {
-                min-height: 60px;
-                padding: 5px;
-            }
-        }
-    </style>
+    <title>Panel del Cliente - Coach AP</title>
+    <style data-en="Calendar" data-es="Calendario" data-lang-key="calendar">Calendar</span>/style>
 </head>
 <body>
+    <div id="language-selector" style="position: fixed; top: 10px; right: 10px; z-index: 1000; background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <select id="lang-select" onchange="changeLanguage()" style="padding: 5px; border: 1px solid #ddd; border-radius: 3px;">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
     <div class="sidebar">
         <div class="sidebar-header">
             <div class="trainer-logo">
@@ -519,55 +26,55 @@
         <nav class="sidebar-menu">
             <a href="/app/client/26604555/dash" class="menu-item active" target="_blank" rel="noopener noreferrer">
                 <i>📊</i>
-                <span class="menu-text">Dashboard</span>
+                <span class="menu-text">Panel</span>
             </a>
             <a href="client-profile.html" class="menu-item" id="profile-menu-item">
                 <i>👤</i>
-                <span class="menu-text">My Profile</span>
+                <span class="menu-text">Mi Perfil</span>
             </a>
             <a href="/app/client/26604555/trainingProgram" class="menu-item" target="_blank" rel="noopener noreferrer">
                 <i>💪</i>
-                <span class="menu-text">Training Program</span>
+                <span class="menu-text">Programa de Entrenamiento</span>
             </a>
             <a href="/app/client/26604555/messages" class="menu-item" target="_blank" rel="noopener noreferrer">
                 <i>💬</i>
-                <span class="menu-text">Messages</span>
+                <span class="menu-text">Mensajes</span>
             </a>
-            <a href="/app/client/26604555/userGroups" class="menu-item" target="_blank" rel="noopener noreferrer">
+            <a href="/app/client/26604555/userGrupos" class="menu-item" target="_blank" rel="noopener noreferrer">
                 <i>👥</i>
-                <span class="menu-text">Groups</span>
+                <span class="menu-text">Grupos</span>
             </a>
             <a href="/app/client/26604555/progress" class="menu-item" target="_blank" rel="noopener noreferrer">
                 <i>📈</i>
-                <span class="menu-text">Progress</span>
+                <span class="menu-text">Progreso</span>
             </a>
             <a href="/app/client/26604555/badges" class="menu-item" target="_blank" rel="noopener noreferrer">
                 <i>🏆</i>
-                <span class="menu-text">Badges</span>
+                <span class="menu-text">Insignias</span>
             </a>
             <a href="#" class="menu-item" id="calendar-menu-item">
                 <i>📅</i>
-                <span class="menu-text">Calendar</span>
+                <span class="menu-text" data-en="Calendar" data-es="Calendario" data-lang-key="calendar">Calendar</span>/span>
             </a>
             <a href="/app/client/26604555/classes" class="menu-item" target="_blank" rel="noopener noreferrer">
                 <i>🏃</i>
-                <span class="menu-text">Classes</span>
+                <span class="menu-text">Clases</span>
             </a>
         </nav>
     </div>
     
     <div class="main-content">
         <div class="top-bar">
-            <h1 class="page-title">Dashboard</h1>
+            <h1 class="page-title">Panel</h1>
             <div class="user-actions">
-                <button class="notification-btn" title="Notifications">
+                <button class="notification-btn" title="Notificaciones">
                     <i>🔔</i>
                 </button>
-                <button class="user-profile" title="Profile">
+                <button class="user-profile" title="Perfil">
                     <i>👤</i>
                 </button>
                 <button class="logout-btn" onclick="logout()">
-                    <i>🚪</i> Logout
+                    <i>🚪</i> Cerrar sesión
                 </button>
             </div>
         </div>
@@ -576,7 +83,7 @@
             <strong>Note:</strong> This dashboard connects to your real Trainerize account. Clicking sidebar links will open the actual Trainerize pages in a new tab.
         </div>
         
-        <!-- Calendar Container -->
+        <!-- Calendario Container -->
         <div class="calendar-container" id="calendarContainer">
             <div class="calendar-header">
                 <div class="calendar-nav">
@@ -587,7 +94,7 @@
             </div>
             
             <div class="calendar-grid" id="calendarGrid">
-                <!-- Calendar will be generated by JavaScript -->
+                <!-- Calendario will be generated by JavaScript -->
             </div>
             
             <div class="selected-day-view" id="selectedDayView">
@@ -598,12 +105,12 @@
             </div>
         </div>
         
-        <!-- Dashboard Grid (shown by default) -->
+        <!-- Panel Grid (shown by default) -->
         <div class="dashboard-grid" id="dashboardGrid">
-            <!-- Things to do today -->
+            <!-- Cosas por hacer hoy -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Things to do today</h3>
+                    <h3 class="card-title">Cosas por hacer hoy</h3>
                     <div class="card-icon">📋</div>
                 </div>
                 <div class="tasks-list">
@@ -612,8 +119,8 @@
                             <i>☐</i>
                         </div>
                         <div class="task-content">
-                            <div class="task-title">Complete morning workout</div>
-                            <div class="task-meta">Training Program</div>
+                            <div class="task-title">Completar entrenamiento matutino</div>
+                            <div class="task-meta">Programa de Entrenamiento</div>
                         </div>
                     </div>
                     <div class="task-item">
@@ -621,7 +128,7 @@
                             <i>☐</i>
                         </div>
                         <div class="task-content">
-                            <div class="task-title">Track nutrition</div>
+                            <div class="task-title">Registrar nutrición</div>
                             <div class="task-meta">Nutrition Log</div>
                         </div>
                     </div>
@@ -630,23 +137,23 @@
                             <i>☐</i>
                         </div>
                         <div class="task-content">
-                            <div class="task-title">Check messages</div>
+                            <div class="task-title">Revisar mensajes</div>
                             <div class="task-meta">Inbox</div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Water intake -->
+            <!-- Agua intake -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Water</h3>
+                    <h3 class="card-title">Agua</h3>
                     <div class="card-icon">💧</div>
                 </div>
                 <div class="water-intake">
                     <div>0 ml</div>
                     <div class="water-value">0%</div>
-                    <div class="water-label">of daily goal</div>
+                    <div class="water-label">de la meta diaria</div>
                 </div>
                 <div class="progress-container">
                     <div class="progress-bar">
@@ -659,13 +166,13 @@
             <!-- Virtual classes -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Virtual Classes</h3>
+                    <h3 class="card-title">Virtual Clases</h3>
                     <div class="card-icon">💻</div>
                 </div>
                 <div class="classes-section">
                     <div class="class-item">
-                        <div class="class-title">No classes scheduled yet.</div>
-                        <div class="class-meta">There are no upcoming classes.</div>
+                        <div class="class-title">No hay clases programadas aún.</div>
+                        <div class="class-meta">No hay clases próximas.</div>
                     </div>
                 </div>
             </div>
@@ -673,73 +180,73 @@
             <!-- In-person classes -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">In-person Classes</h3>
+                    <h3 class="card-title">In-person Clases</h3>
                     <div class="card-icon">🏃</div>
                 </div>
                 <div class="classes-section">
                     <div class="class-item">
-                        <div class="class-title">No classes scheduled yet.</div>
-                        <div class="class-meta">There are no upcoming classes.</div>
+                        <div class="class-title">No hay clases programadas aún.</div>
+                        <div class="class-meta">No hay clases próximas.</div>
                     </div>
                 </div>
             </div>
             
-            <!-- Progress metrics -->
+            <!-- Progreso metrics -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Progress</h3>
+                    <h3 class="card-title">Progreso</h3>
                     <div class="card-icon">📊</div>
                 </div>
                 <div class="stats-grid">
                     <div class="stat-item">
                         <div class="stat-value">0</div>
-                        <div class="stat-label">Caloric Burn</div>
+                        <div class="stat-label">Quema Calórica</div>
                         <div class="stat-label">1 Feb 2026</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-value">153.87</div>
-                        <div class="stat-label">Lean Mass</div>
+                        <div class="stat-label">Masa Magra</div>
                         <div class="stat-label">26 Nov 2025</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-value">193.3</div>
-                        <div class="stat-label">Body Weight</div>
+                        <div class="stat-label">Body Peso</div>
                         <div class="stat-label">26 Nov 2025</div>
                     </div>
                     <div class="stat-item">
                         <div class="stat-value">20.4</div>
-                        <div class="stat-label">Body Fat %</div>
+                        <div class="stat-label">% Grasa Corporal</div>
                         <div class="stat-label">26 Nov 2025</div>
                     </div>
                 </div>
             </div>
             
-            <!-- Achievements -->
+            <!-- Logros -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Achievements</h3>
+                    <h3 class="card-title">Logros</h3>
                     <div class="card-icon">🏆</div>
                 </div>
                 <div class="achievements-section">
                     <div class="achievement-item">
                         <div class="achievement-icon">20</div>
                         <div class="achievement-content">
-                            <div class="achievement-title">Milestone bike ride</div>
-                            <div class="achievement-desc">You cycled for 20 miles</div>
+                            <div class="achievement-title">Recorrido en bicicleta</div>
+                            <div class="achievement-desc">Cicló durante 20 millas</div>
                         </div>
                     </div>
                     <div class="achievement-item">
                         <div class="achievement-icon">10</div>
                         <div class="achievement-content">
-                            <div class="achievement-title">Milestone bike ride</div>
-                            <div class="achievement-desc">You cycled for 10 miles</div>
+                            <div class="achievement-title">Recorrido en bicicleta</div>
+                            <div class="achievement-desc">Cicló durante 10 millas</div>
                         </div>
                     </div>
                     <div class="achievement-item">
                         <div class="achievement-icon">1</div>
                         <div class="achievement-content">
-                            <div class="achievement-title">1st workout ever!</div>
-                            <div class="achievement-desc">You're off to a great start!</div>
+                            <div class="achievement-title">¡Primer entrenamiento!</div>
+                            <div class="achievement-desc">¡Está comenzando muy bien!</div>
                         </div>
                     </div>
                 </div>
@@ -747,74 +254,20 @@
         </div>
     </div>
     
-    <script>
-        // Set the client name from localStorage
-        document.addEventListener('DOMContentLoaded', function() {
-            const userName = localStorage.getItem('currentUser') || 'Client';
-            document.querySelector('.trainer-name').textContent = userName;
-            
-            // Initialize calendar
-            initCalendar();
-            
-            // Add event listener to calendar menu item
-            document.getElementById('calendar-menu-item').addEventListener('click', function(e) {
-                e.preventDefault();
-                showCalendar();
-            });
-            
-            // Show warning about external links
-            document.getElementById('externalLinkWarning').style.display = 'block';
-        });
-        
-        // Calendar functionality
-        let currentDate = new Date();
-        let currentMonth = currentDate.getMonth();
-        let currentYear = currentDate.getFullYear();
-        
-        function initCalendar() {
-            renderCalendar(currentMonth, currentYear);
-        }
-        
-        function renderCalendar(month, year) {
-            const calendarGrid = document.getElementById('calendarGrid');
-            const currentMonthEl = document.getElementById('currentMonth');
-            
-            // Set the current month header
-            const monthNames = ["January", "February", "March", "April", "May", "June",
-                               "July", "August", "September", "October", "November", "December"];
-            currentMonthEl.textContent = `${monthNames[month]} ${year}`;
-            
-            // Clear the calendar grid
-            calendarGrid.innerHTML = '';
-            
-            // Add day headers
-            const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-            dayHeaders.forEach(day => {
-                const headerCell = document.createElement('div');
-                headerCell.className = 'calendar-day-header';
-                headerCell.textContent = day;
-                calendarGrid.appendChild(headerCell);
-            });
-            
-            // Get the first day of the month and the number of days in the month
-            const firstDay = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            
-            // Add empty cells for days before the first day of the month
-            for (let i = 0; i < firstDay; i++) {
+    <script data-en="Calendar" data-es="Calendario" data-lang-key="calendar">Calendar</span> firstDay; i++) {
                 const emptyCell = document.createElement('div');
-                emptyCell.className = 'calendar-day other-month';
+                emptyCell.classNombre = 'calendar-day other-month';
                 calendarGrid.appendChild(emptyCell);
             }
             
             // Add cells for each day of the month
             for (let day = 1; day <= daysInMonth; day++) {
                 const dayCell = document.createElement('div');
-                dayCell.className = 'calendar-day current-month';
+                dayCell.classNombre = 'calendar-day current-month';
                 if (day === currentDate.getDate() && month === currentDate.getMonth() && year === currentDate.getFullYear()) {
                     dayCell.classList.add('today');
                     dayCell.style.backgroundColor = '#e3f2fd';
-                    dayCell.style.fontWeight = 'bold';
+                    dayCell.style.fontPeso = 'bold';
                 }
                 
                 // Check if this day has events (for demo purposes)
@@ -824,17 +277,17 @@
                 }
                 
                 const dayNumber = document.createElement('div');
-                dayNumber.className = 'day-number';
+                dayNumber.classNombre = 'day-number';
                 dayNumber.textContent = day;
                 dayCell.appendChild(dayNumber);
                 
                 if (hasEvent) {
                     const events = getEventsForDay(year, month, day);
                     const eventsContainer = document.createElement('div');
-                    eventsContainer.className = 'day-events';
+                    eventsContainer.classNombre = 'day-events';
                     events.forEach(event => {
                         const eventBadge = document.createElement('div');
-                        eventBadge.className = 'event-badge';
+                        eventBadge.classNombre = 'event-badge';
                         eventBadge.textContent = event.title.substring(0, 3);
                         eventsContainer.appendChild(eventBadge);
                     });
@@ -855,129 +308,213 @@
                 currentMonth = 11;
                 currentYear--;
             }
-            renderCalendar(currentMonth, currentYear);
+            renderCalendario(currentMonth, currentYear);
         }
         
         function nextMonth() {
             currentMonth++;
-            if (currentMonth > 11) {
-                currentMonth = 0;
-                currentYear++;
-            }
-            renderCalendar(currentMonth, currentYear);
-        }
-        
-        function checkForEvents(year, month, day) {
-            // For demo purposes, add some sample events
-            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-            const sampleEvents = [
-                `${currentYear}-02-03`, // Today
-                `${currentYear}-02-05`,
-                `${currentYear}-02-08`,
-                `${currentYear}-02-12`,
-                `${currentYear}-02-15`,
-                `${currentYear}-02-18`,
-                `${currentYear}-02-22`,
-                `${currentYear}-02-25`
-            ];
-            return sampleEvents.includes(dateStr);
-        }
-        
-        function getEventsForDay(year, month, day) {
-            // Return sample events for the given day
-            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-            const events = {
-                [`${currentYear}-02-03`]: [{title: "Morning Workout", time: "8:00 AM", type: "training"}],
-                [`${currentYear}-02-05`]: [
-                    {title: "Strength Training", time: "9:00 AM", type: "training"},
-                    {title: "Nutrition Consult", time: "2:00 PM", type: "consultation"}
-                ],
-                [`${currentYear}-02-08`]: [{title: "Cardio Session", time: "7:00 AM", type: "training"}],
-                [`${currentYear}-02-12`]: [{title: "Progress Photo", time: "10:00 AM", type: "tracking"}],
-                [`${currentYear}-02-15`]: [
-                    {title: "Yoga Class", time: "6:00 PM", type: "class"},
-                    {title: "Weekly Check-in", time: "7:00 PM", type: "consultation"}
-                ],
-                [`${currentYear}-02-18`]: [{title: "HIIT Workout", time: "8:30 AM", type: "training"}],
-                [`${currentYear}-02-22`]: [{title: "Body Composition", time: "11:00 AM", type: "tracking"}],
-                [`${currentYear}-02-25`]: [{title: "Flexibility Training", time: "7:30 AM", type: "training"}]
-            };
-            
-            return events[dateStr] || [];
-        }
-        
-        function showDayDetails(year, month, day) {
-            const monthNames = ["January", "February", "March", "April", "May", "June",
-                               "July", "August", "September", "October", "November", "December"];
-            document.getElementById('selectedDateHeader').textContent = `Events for ${monthNames[month]} ${day}, ${year}`;
-            
-            const events = getEventsForDay(year, month, day);
-            const eventsList = document.getElementById('dayEventsList');
-            eventsList.innerHTML = '';
-            
-            if (events.length > 0) {
-                events.forEach(event => {
-                    const eventEl = document.createElement('div');
-                    eventEl.className = 'day-event';
-                    eventEl.innerHTML = `
-                        <div><strong>${event.title}</strong></div>
+            if (currentMonth  data-en="Calendar" data-es="Calendario" data-lang-key="calendar">Calendar</span>div><strong>${event.title}</strong></div>
                         <div>${event.time} • ${event.type.charAt(0).toUpperCase() + event.type.slice(1)}</div>
                     `;
                     eventsList.appendChild(eventEl);
                 });
             } else {
-                eventsList.innerHTML = '<div>No events scheduled for this day</div>';
+                eventsList.innerHTML = '<div>No events scheduled for this day</div data-en="Calendar" data-es="Calendario" data-lang-key="calendar">Calendar</span>/script>
+
+    
+    <script>
+        // Comprehensive language toggle system
+        const translations = {
+            "en": {
+                "client_portal_login": "Client Portal Login",
+                "access_dashboard": "Access your personalized training dashboard",
+                "username": "Username",
+                "password": "Password",
+                "login": "Login",
+                "forgot_password": "Forgot Password?",
+                "register": "Register",
+                "my_profile": "My Profile",
+                "edit_profile": "Edit Profile",
+                "update_intake": "Update Intake Form",
+                "client_profile": "Client Profile",
+                "personal_info": "Personal Information",
+                "emergency_contact": "Emergency Contact",
+                "health_medical": "Health & Medical",
+                "fitness_history": "Fitness History",
+                "goals_preferences": "Goals & Preferences",
+                "lifestyle": "Lifestyle",
+                "exercise_preferences": "Exercise Preferences",
+                "documents": "Documents",
+                "client_intake_form": "Client Intake Form",
+                "initial_assessment": "Initial assessment and health questionnaire",
+                "edit": "Edit",
+                "download": "Download",
+                "training_program": "Training Program",
+                "personalized_plan": "Your personalized workout plan",
+                "nutrition_guide": "Nutrition Guide",
+                "nutrition_recommendations": "Personalized nutrition recommendations",
+                "progress_tracking": "Progress Tracking",
+                "historical_progress": "Historical progress and achievements",
+                "client_dashboard": "Client Dashboard",
+                "dashboard": "Dashboard",
+                "messages": "Messages",
+                "groups": "Groups",
+                "progress": "Progress",
+                "badges": "Badges",
+                "calendar": "Calendar",
+                "classes": "Classes",
+                "logout": "Logout",
+                "notifications": "Notifications",
+                "profile": "Profile",
+                "save_changes": "Save Changes",
+                "cancel": "Cancel",
+                "name": "Name",
+                "phone": "Phone",
+                "email": "Email",
+                "date_of_birth": "Date of Birth",
+                "age": "Age",
+                "height": "Height",
+                "weight": "Weight",
+                "gender": "Gender",
+                "occupation": "Occupation",
+                "relationship": "Relationship",
+                "medical_conditions": "Medical Conditions",
+                "medications": "Medications",
+                "injuries_surgeries": "Injuries/Surgeries",
+                "allergies": "Allergies",
+                "fitness_level": "Fitness Level",
+                "exercise_history": "Exercise History",
+                "equipment_access": "Equipment Access",
+                "primary_goal": "Primary Goal",
+                "secondary_goals": "Secondary Goals",
+                "target_timeline": "Target Timeline",
+                "sessions_week": "Sessions/Week",
+                "sessions_month": "Sessions/Month",
+                "preferred_times": "Preferred Days/Times",
+                "activity_level": "Activity Level",
+                "sleep_hours": "Sleep Hours",
+                "dietary_restrictions": "Dietary Restrictions",
+                "days_exercising": "Days Exercising/Week",
+                "favorite_exercises": "Favorite Exercises",
+                "exercises_avoid": "Exercises to Avoid"
+            },
+            "es": {
+                "client_portal_login": "Inicio de Sesión del Portal del Cliente",
+                "access_dashboard": "Acceda a su panel de entrenamiento personalizado",
+                "username": "Nombre de usuario",
+                "password": "Contraseña",
+                "login": "Iniciar sesión",
+                "forgot_password": "¿Olvidó su contraseña?",
+                "register": "Registrarse",
+                "my_profile": "Mi Perfil",
+                "edit_profile": "Editar Perfil",
+                "update_intake": "Actualizar Formulario de Ingreso",
+                "client_profile": "Perfil del Cliente",
+                "personal_info": "Información Personal",
+                "emergency_contact": "Contacto de Emergencia",
+                "health_medical": "Salud y Médico",
+                "fitness_history": "Historial de Ejercicio",
+                "goals_preferences": "Metas y Preferencias",
+                "lifestyle": "Estilo de Vida",
+                "exercise_preferences": "Preferencias de Ejercicio",
+                "documents": "Documentos",
+                "client_intake_form": "Formulario de Ingreso del Cliente",
+                "initial_assessment": "Evaluación inicial y cuestionario de salud",
+                "edit": "Editar",
+                "download": "Descargar",
+                "training_program": "Programa de Entrenamiento",
+                "personalized_plan": "Su plan de ejercicio personalizado",
+                "nutrition_guide": "Guía de Nutrición",
+                "nutrition_recommendations": "Recomendaciones nutricionales personalizadas",
+                "progress_tracking": "Seguimiento de Progreso",
+                "historical_progress": "Progreso histórico y logros",
+                "client_dashboard": "Panel del Cliente",
+                "dashboard": "Panel",
+                "messages": "Mensajes",
+                "groups": "Grupos",
+                "progress": "Progreso",
+                "badges": "Insignias",
+                "calendar": "Calendario",
+                "classes": "Clases",
+                "logout": "Cerrar sesión",
+                "notifications": "Notificaciones",
+                "profile": "Perfil",
+                "save_changes": "Guardar Cambios",
+                "cancel": "Cancelar",
+                "name": "Nombre",
+                "phone": "Teléfono",
+                "email": "Correo electrónico",
+                "date_of_birth": "Fecha de Nacimiento",
+                "age": "Edad",
+                "height": "Altura",
+                "weight": "Peso",
+                "gender": "Género",
+                "occupation": "Ocupación",
+                "relationship": "Relación",
+                "medical_conditions": "Condiciones Médicas",
+                "medications": "Medicamentos",
+                "injuries_surgeries": "Lesiones/Cirugías",
+                "allergies": "Alergias",
+                "fitness_level": "Nivel de Condición Física",
+                "exercise_history": "Historial de Ejercicio",
+                "equipment_access": "Acceso a Equipos",
+                "primary_goal": "Meta Principal",
+                "secondary_goals": "Metas Secundarias",
+                "target_timeline": "Plazo Objetivo",
+                "sessions_week": "Sesiones por Semana",
+                "sessions_month": "Sesiones por Mes",
+                "preferred_times": "Días/Horarios Preferidos",
+                "activity_level": "Nivel de Actividad",
+                "sleep_hours": "Horas de Sueño",
+                "dietary_restrictions": "Restricciones Dietéticas",
+                "days_exercising": "Días de Ejercicio por Semana",
+                "favorite_exercises": "Ejercicios Favoritos",
+                "exercises_avoid": "Ejercicios a Evitar"
             }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
             
-            document.getElementById('selectedDayView').style.display = 'block';
-        }
-        
-        function showCalendar() {
-            // Hide dashboard, show calendar
-            document.getElementById('dashboardGrid').style.display = 'none';
-            document.getElementById('calendarContainer').style.display = 'block';
+            // Update all elements with data-lang-key attributes
+            const elements = document.querySelectorAll('[data-lang-key]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
             
-            // Update active menu item
-            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
-            document.getElementById('calendar-menu-item').classList.add('active');
-            document.querySelector('.page-title').textContent = 'Calendar';
-        }
-        
-        function showDashboard() {
-            // Hide calendar, show dashboard
-            document.getElementById('calendarContainer').style.display = 'none';
-            document.getElementById('dashboardGrid').style.display = 'grid';
+            // Update placeholder attributes
+            const placeholders = document.querySelectorAll('[data-lang-placeholder]');
+            placeholders.forEach(element => {
+                const key = element.getAttribute('data-lang-placeholder');
+                if (translations[lang] && translations[lang][key]) {
+                    element.placeholder = translations[lang][key];
+                }
+            });
             
-            // Update active menu item
-            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
-            document.querySelector('#calendar-menu-item').classList.remove('active');
-            document.querySelector('.page-title').textContent = 'Dashboard';
+            // Update button values
+            const buttons = document.querySelectorAll('[data-lang-button]');
+            buttons.forEach(button => {
+                const key = button.getAttribute('data-lang-button');
+                if (translations[lang] && translations[lang][key]) {
+                    button.value = translations[lang][key];
+                }
+            });
+            
+            // Update the selector
+            const selector = document.getElementById('lang-select');
+            if (selector) {
+                selector.value = lang;
+            }
         }
-        
-        // Add click handler to calendar menu item to return to dashboard
-        document.getElementById('calendar-menu-item').addEventListener('click', function(e) {
-            e.preventDefault();
-            showCalendar();
+
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            changeLanguage(savedLang);
         });
-        
-        function logout() {
-            // Clear authentication token
-            localStorage.removeItem('authToken');
-            localStorage.removeItem('currentUser');
-            
-            // Redirect to login
-            window.location.href = 'login.html';
-        }
-        
-        // Check if user is authenticated
-        function checkAuth() {
-            if (!localStorage.getItem('authToken')) {
-                window.location.href = 'login.html';
-            }
-        }
-        
-        // Run auth check
-        checkAuth();
     </script>
 </body>
 </html>

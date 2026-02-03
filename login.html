@@ -1,189 +1,219 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Login - Coach AP</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .login-container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-        .login-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .login-header h1 {
-            color: #333;
-            margin: 0;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: bold;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .btn:hover {
-            background: #5a6fd8;
-        }
-        .links {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .links a {
-            color: #667eea;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        .error-message {
-            color: #e74c3c;
-            text-align: center;
-            margin-top: 10px;
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <div class="login-header">
-            <h1>Client Portal Login</h1>
-            <p>Access your personalized training dashboard</p>
-        </div>
-        
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            
-            <button type="submit" class="btn">Login</button>
-            
-            <div class="error-message" id="errorMessage"></div>
-        </form>
-        
-        <div class="links">
-            <a href="forgot-password.html">Forgot Password?</a>
-            <a href="register.html">Register</a>
-        </div>
-    </div>
-    
+
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            // Simple client-side validation
-            if (!username || !password) {
-                showError('Please enter both username and password');
-                return;
+        // Comprehensive language toggle system
+        const translations = {
+            "en": {
+                "client_portal_login": "Client Portal Login",
+                "access_dashboard": "Access your personalized training dashboard",
+                "username": "Username",
+                "password": "Password",
+                "login": "Login",
+                "forgot_password": "Forgot Password?",
+                "register": "Register",
+                "my_profile": "My Profile",
+                "edit_profile": "Edit Profile",
+                "update_intake": "Update Intake Form",
+                "client_profile": "Client Profile",
+                "personal_info": "Personal Information",
+                "emergency_contact": "Emergency Contact",
+                "health_medical": "Health & Medical",
+                "fitness_history": "Fitness History",
+                "goals_preferences": "Goals & Preferences",
+                "lifestyle": "Lifestyle",
+                "exercise_preferences": "Exercise Preferences",
+                "documents": "Documents",
+                "client_intake_form": "Client Intake Form",
+                "initial_assessment": "Initial assessment and health questionnaire",
+                "edit": "Edit",
+                "download": "Download",
+                "training_program": "Training Program",
+                "personalized_plan": "Your personalized workout plan",
+                "nutrition_guide": "Nutrition Guide",
+                "nutrition_recommendations": "Personalized nutrition recommendations",
+                "progress_tracking": "Progress Tracking",
+                "historical_progress": "Historical progress and achievements",
+                "client_dashboard": "Client Dashboard",
+                "dashboard": "Dashboard",
+                "messages": "Messages",
+                "groups": "Groups",
+                "progress": "Progress",
+                "badges": "Badges",
+                "calendar": "Calendar",
+                "classes": "Classes",
+                "logout": "Logout",
+                "notifications": "Notifications",
+                "profile": "Profile",
+                "save_changes": "Save Changes",
+                "cancel": "Cancel",
+                "name": "Name",
+                "phone": "Phone",
+                "email": "Email",
+                "date_of_birth": "Date of Birth",
+                "age": "Age",
+                "height": "Height",
+                "weight": "Weight",
+                "gender": "Gender",
+                "occupation": "Occupation",
+                "relationship": "Relationship",
+                "medical_conditions": "Medical Conditions",
+                "medications": "Medications",
+                "injuries_surgeries": "Injuries/Surgeries",
+                "allergies": "Allergies",
+                "fitness_level": "Fitness Level",
+                "exercise_history": "Exercise History",
+                "equipment_access": "Equipment Access",
+                "primary_goal": "Primary Goal",
+                "secondary_goals": "Secondary Goals",
+                "target_timeline": "Target Timeline",
+                "sessions_week": "Sessions/Week",
+                "sessions_month": "Sessions/Month",
+                "preferred_times": "Preferred Days/Times",
+                "activity_level": "Activity Level",
+                "sleep_hours": "Sleep Hours",
+                "dietary_restrictions": "Dietary Restrictions",
+                "days_exercising": "Days Exercising/Week",
+                "favorite_exercises": "Favorite Exercises",
+                "exercises_avoid": "Exercises to Avoid"
+            },
+            "es": {
+                "client_portal_login": "Inicio de Sesión del Portal del Cliente",
+                "access_dashboard": "Acceda a su panel de entrenamiento personalizado",
+                "username": "Nombre de usuario",
+                "password": "Contraseña",
+                "login": "Iniciar sesión",
+                "forgot_password": "¿Olvidó su contraseña?",
+                "register": "Registrarse",
+                "my_profile": "Mi Perfil",
+                "edit_profile": "Editar Perfil",
+                "update_intake": "Actualizar Formulario de Ingreso",
+                "client_profile": "Perfil del Cliente",
+                "personal_info": "Información Personal",
+                "emergency_contact": "Contacto de Emergencia",
+                "health_medical": "Salud y Médico",
+                "fitness_history": "Historial de Ejercicio",
+                "goals_preferences": "Metas y Preferencias",
+                "lifestyle": "Estilo de Vida",
+                "exercise_preferences": "Preferencias de Ejercicio",
+                "documents": "Documentos",
+                "client_intake_form": "Formulario de Ingreso del Cliente",
+                "initial_assessment": "Evaluación inicial y cuestionario de salud",
+                "edit": "Editar",
+                "download": "Descargar",
+                "training_program": "Programa de Entrenamiento",
+                "personalized_plan": "Su plan de ejercicio personalizado",
+                "nutrition_guide": "Guía de Nutrición",
+                "nutrition_recommendations": "Recomendaciones nutricionales personalizadas",
+                "progress_tracking": "Seguimiento de Progreso",
+                "historical_progress": "Progreso histórico y logros",
+                "client_dashboard": "Panel del Cliente",
+                "dashboard": "Panel",
+                "messages": "Mensajes",
+                "groups": "Grupos",
+                "progress": "Progreso",
+                "badges": "Insignias",
+                "calendar": "Calendario",
+                "classes": "Clases",
+                "logout": "Cerrar sesión",
+                "notifications": "Notificaciones",
+                "profile": "Perfil",
+                "save_changes": "Guardar Cambios",
+                "cancel": "Cancelar",
+                "name": "Nombre",
+                "phone": "Teléfono",
+                "email": "Correo electrónico",
+                "date_of_birth": "Fecha de Nacimiento",
+                "age": "Edad",
+                "height": "Altura",
+                "weight": "Peso",
+                "gender": "Género",
+                "occupation": "Ocupación",
+                "relationship": "Relación",
+                "medical_conditions": "Condiciones Médicas",
+                "medications": "Medicamentos",
+                "injuries_surgeries": "Lesiones/Cirugías",
+                "allergies": "Alergias",
+                "fitness_level": "Nivel de Condición Física",
+                "exercise_history": "Historial de Ejercicio",
+                "equipment_access": "Acceso a Equipos",
+                "primary_goal": "Meta Principal",
+                "secondary_goals": "Metas Secundarias",
+                "target_timeline": "Plazo Objetivo",
+                "sessions_week": "Sesiones por Semana",
+                "sessions_month": "Sesiones por Mes",
+                "preferred_times": "Días/Horarios Preferidos",
+                "activity_level": "Nivel de Actividad",
+                "sleep_hours": "Horas de Sueño",
+                "dietary_restrictions": "Restricciones Dietéticas",
+                "days_exercising": "Días de Ejercicio por Semana",
+                "favorite_exercises": "Ejercicios Favoritos",
+                "exercises_avoid": "Ejercicios a Evitar"
             }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
             
-            // In a real implementation, this would make an AJAX call to authenticate
-            // For now, we'll simulate authentication
-            authenticateUser(username, password);
-        });
-        
-        function authenticateUser(username, password) {
-            // This would typically make an API call to the backend for real authentication
-            // For demo purposes, we'll simulate successful authentication
-            console.log('Attempting to authenticate user:', username);
+            // Update all elements with data-lang-key attributes
+            const elements = document.querySelectorAll('[data-lang-key]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
             
-            // Simulate network request delay
-            setTimeout(function() {
-                // In a real system, this would validate credentials server-side
-                // and return a session token that we'd store locally
-                // For demo, we'll just set a mock token
-                localStorage.setItem('authToken', 'mock-auth-token-' + Date.now());
-                localStorage.setItem('currentUser', username);
-                
-                // Redirect to client dashboard
-                window.location.href = 'real-trainerize-dashboard.html';
-            }, 1500);
+            // Update placeholder attributes
+            const placeholders = document.querySelectorAll('[data-lang-placeholder]');
+            placeholders.forEach(element => {
+                const key = element.getAttribute('data-lang-placeholder');
+                if (translations[lang] && translations[lang][key]) {
+                    element.placeholder = translations[lang][key];
+                }
+            });
+            
+            // Update button values
+            const buttons = document.querySelectorAll('[data-lang-button]');
+            buttons.forEach(button => {
+                const key = button.getAttribute('data-lang-button');
+                if (translations[lang] && translations[lang][key]) {
+                    button.value = translations[lang][key];
+                }
+            });
+            
+            // Update the selector
+            const selector = document.getElementById('lang-select');
+            if (selector) {
+                selector.value = lang;
+            }
         }
+
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            changeLanguage(savedLang);
+        });
     </script>
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // Language toggle functionality
+        function changeLanguage() {
+            const langSelect = document.getElementById('lang-select');
+            const selectedLang = langSelect.value;
             
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+            // Store the selected language in localStorage
+            localStorage.setItem('preferredLanguage', selectedLang);
             
-            // Simple client-side validation
-            if (!username || !password) {
-                showError('Please enter both username and password');
-                return;
-            }
-            
-            // Show loading state
-            const submitBtn = document.querySelector('.btn');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Logging in...';
-            submitBtn.disabled = true;
-            
-            // In a real implementation, this would make an AJAX call to authenticate
-            // For now, we'll simulate authentication with a small delay
-            authenticateUser(username, password);
-        });
-        
-        function authenticateUser(username, password) {
-            // This would typically make an API call to the backend for real authentication
-            // For demo purposes, we'll simulate successful authentication
-            console.log('Attempting to authenticate user:', username);
-            
-            // Simulate network request delay
-            setTimeout(function() {
-                // In a real system, this would validate credentials server-side
-                // and return a session token that we'd store locally
-                // For demo, we'll just set a mock token
-                localStorage.setItem('authToken', 'mock-auth-token-' + Date.now());
-                localStorage.setItem('currentUser', username);
-                
-                // Redirect to client dashboard
-                window.location.href = 'real-trainerize-dashboard.html';
-            }, 1500);
+            // Reload the page to apply language changes
+            location.reload();
         }
-    </script></body>
+        
+        // Set the language on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            const langSelect = document.getElementById('lang-select');
+            if (langSelect) {
+                langSelect.value = savedLang;
+            }
+        });
+    </script>
+</body>
 </html>

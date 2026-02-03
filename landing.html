@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coach AP - Personal Training Dashboard</title>
+    <title>Coach AP - Personal Training Panel</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -77,23 +77,31 @@
     </style>
 </head>
 <body>
+    <div id="language-selector" style="position: fixed; top: 10px; right: 10px; z-index: 1000; background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <select id="lang-select" onchange="changeLanguage(this.value)" style="padding: 5px; border: 1px solid #ddd; border-radius: 3px;">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
     <div class="welcome-container">
         <div class="welcome-header">
-            <h1>Coach AP Training Systems</h1>
-            <p>Professional Fitness & Wellness Management</p>
+            <h1>Sistemas de Entrenamiento Coach AP</h1>
+            <p>Gestión Profesional de Fitness y Bienestar</p>
         </div>
         
-        <p>Select your access level:</p>
+        <p>Seleccione su nivel de acceso:</p>
         
         <div class="btn-container">
-            <a href="index.html" class="btn btn-trainer">Trainer Dashboard</a>
+            <a href="index.html" class="btn btn-trainer">Trainer Panel</a>
             <div class="divider">OR</div>
-            <a href="login.html" class="btn btn-client">Client Portal Login</a>
+            <a href="login.html" class="btn btn-client">Inicio de Sesión del Portal del Cliente</a>
         </div>
         
         <div style="margin-top: 30px; font-size: 0.9em; color: #666;">
-            <p>Need help? Contact your administrator</p>
+            <p>¿Necesita ayuda? Contacte a su administrador</p>
         </div>
     </div>
+
+    <script data-en="Name" data-es="Nombre" data-lang-key="name">Name</span>/script>
 </body>
 </html>

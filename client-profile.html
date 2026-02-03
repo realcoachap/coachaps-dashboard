@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Profile - Coach AP</title>
+    <title>Perfil del Cliente - Coach AP</title>
     <style>
         * {
             margin: 0;
@@ -425,6 +425,12 @@
     </style>
 </head>
 <body>
+    <div id="language-selector" style="position: fixed; top: 10px; right: 10px; z-index: 1000; background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <select id="lang-select" onchange="changeLanguage()" style="padding: 5px; border: 1px solid #ddd; border-radius: 3px;">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
     <div class="sidebar">
         <div class="sidebar-header">
             <div class="trainer-logo">
@@ -438,191 +444,191 @@
         <nav class="sidebar-menu">
             <a href="real-trainerize-dashboard.html" class="menu-item">
                 <i>📊</i>
-                <span class="menu-text">Dashboard</span>
+                <span class="menu-text">Panel</span>
             </a>
             <a href="/app/client/26604555/trainingProgram" class="menu-item" target="_blank" rel="noopener noreferrer">
                 <i>💪</i>
-                <span class="menu-text">Training Program</span>
+                <span class="menu-text">Programa de Entrenamiento</span>
             </a>
             <a href="/app/client/26604555/messages" class="menu-item" target="_blank" rel="noopener noreferrer">
                 <i>💬</i>
-                <span class="menu-text">Messages</span>
+                <span class="menu-text">Mensajes</span>
             </a>
-            <a href="/app/client/26604555/userGroups" class="menu-item" target="_blank" rel="noopener noreferrer">
+            <a href="/app/client/26604555/userGrupos" class="menu-item" target="_blank" rel="noopener noreferrer">
                 <i>👥</i>
-                <span class="menu-text">Groups</span>
+                <span class="menu-text">Grupos</span>
             </a>
             <a href="/app/client/26604555/progress" class="menu-item" target="_blank" rel="noopener noreferrer">
                 <i>📈</i>
-                <span class="menu-text">Progress</span>
+                <span class="menu-text">Progreso</span>
             </a>
             <a href="/app/client/26604555/badges" class="menu-item" target="_blank" rel="noopener noreferrer">
                 <i>🏆</i>
-                <span class="menu-text">Badges</span>
+                <span class="menu-text">Insignias</span>
             </a>
-            <a href="real-trainerize-dashboard.html" class="menu-item" onclick="showCalendar()">
+            <a href="real-trainerize-dashboard.html" class="menu-item" onclick="showCalendario()">
                 <i>📅</i>
-                <span class="menu-text">Calendar</span>
+                <span class="menu-text" data-en="Calendar" data-es="Calendario" data-lang-key="calendar">Calendar</span>/span>
             </a>
             <a href="/app/client/26604555/classes" class="menu-item" target="_blank" rel="noopener noreferrer">
                 <i>🏃</i>
-                <span class="menu-text">Classes</span>
+                <span class="menu-text">Clases</span>
             </a>
-            <a href="#" class="menu-item active" onclick="showProfile()">
+            <a href="#" class="menu-item active" onclick="showPerfil()">
                 <i>👤</i>
-                <span class="menu-text">My Profile</span>
+                <span class="menu-text">Mi Perfil</span>
             </a>
         </nav>
     </div>
     
     <div class="main-content">
         <div class="top-bar">
-            <h1 class="page-title">My Profile</h1>
+            <h1 class="page-title">Mi Perfil</h1>
             <div class="user-actions">
-                <button class="notification-btn" title="Notifications">
+                <button class="notification-btn" title="Notificaciones">
                     <i>🔔</i>
                 </button>
-                <button class="user-profile" title="Profile">
+                <button class="user-profile" title="Perfil">
                     <i>👤</i>
                 </button>
                 <button class="logout-btn" onclick="logout()">
-                    <i>🚪</i> Logout
+                    <i>🚪</i> Cerrar sesión
                 </button>
             </div>
         </div>
         
-        <!-- Profile View -->
+        <!-- Perfil View -->
         <div class="profile-card" id="profileView">
             <div class="profile-header">
-                <h2 class="profile-title">Client Profile</h2>
+                <h2 class="profile-title">Perfil del Cliente</h2>
                 <div class="profile-actions">
-                    <button class="btn-edit" onclick="editProfile()">Edit Profile</button>
-                    <button class="btn-edit" onclick="showIntakeForm()">Update Intake Form</button>
+                    <button class="btn-edit" onclick="editPerfil()" data-en="Edit" data-es="Editar" data-lang-key="edit">Edit</span>/button>
+                    <button class="btn-edit" onclick="showIntakeForm()">Actualizar Formulario de Ingreso</button>
                 </div>
             </div>
             
             <div class="profile-content">
                 <div class="profile-section">
-                    <h3 class="section-title">Personal Information</h3>
+                    <h3 class="section-title">Información Personal</h3>
                     <div class="section-content">
-                        <p><strong>Name:</strong> <span id="clientName">Loading...</span></p>
-                        <p><strong>Phone:</strong> <span id="clientPhone">Loading...</span></p>
-                        <p><strong>Email:</strong> <span id="clientEmail">Loading...</span></p>
-                        <p><strong>Date of Birth:</strong> <span id="clientDOB">Loading...</span></p>
-                        <p><strong>Age:</strong> <span id="clientAge">Loading...</span></p>
-                        <p><strong>Height:</strong> <span id="clientHeight">Loading...</span></p>
-                        <p><strong>Weight:</strong> <span id="clientWeight">Loading...</span></p>
-                        <p><strong>Gender:</strong> <span id="clientGender">Loading...</span></p>
-                        <p><strong>Occupation:</strong> <span id="clientOccupation">Loading...</span></p>
+                        <p><strong>Nombre:</strong> <span id="clientNombre">Loading...</span></p>
+                        <p><strong>Teléfono:</strong> <span id="clientTeléfono">Loading...</span></p>
+                        <p><strong>Correo electrónico:</strong> <span id="clientCorreo electrónico">Loading...</span></p>
+                        <p><strong>Fecha de Nacimiento:</strong> <span id="clientDOB">Loading...</span></p>
+                        <p><strong>Edad:</strong> <span id="clientEdad">Loading...</span></p>
+                        <p><strong>Altura:</strong> <span id="clientAltura">Loading...</span></p>
+                        <p><strong>Peso:</strong> <span id="clientPeso">Loading...</span></p>
+                        <p><strong>Género:</strong> <span id="clientGénero">Loading...</span></p>
+                        <p><strong>Ocupación:</strong> <span id="clientOcupación">Loading...</span></p>
                     </div>
                 </div>
                 
                 <div class="profile-section">
-                    <h3 class="section-title">Emergency Contact</h3>
+                    <h3 class="section-title">Contacto de Emergencia</h3>
                     <div class="section-content">
-                        <p><strong>Name:</strong> <span id="emergencyName">Loading...</span></p>
-                        <p><strong>Phone:</strong> <span id="emergencyPhone">Loading...</span></p>
-                        <p><strong>Relationship:</strong> <span id="emergencyRelation">Loading...</span></p>
+                        <p><strong>Nombre:</strong> <span id="emergencyNombre">Loading...</span></p>
+                        <p><strong>Teléfono:</strong> <span id="emergencyTeléfono">Loading...</span></p>
+                        <p><strong>Relación:</strong> <span id="emergencyRelation">Loading...</span></p>
                     </div>
                 </div>
                 
                 <div class="profile-section">
-                    <h3 class="section-title">Health & Medical</h3>
+                    <h3 class="section-title">Salud y Médico</h3>
                     <div class="section-content">
-                        <p><strong>Medical Conditions:</strong> <span id="medicalConditions">Loading...</span></p>
-                        <p><strong>Medications:</strong> <span id="medications">Loading...</span></p>
-                        <p><strong>Injuries/Surgeries:</strong> <span id="injuries">Loading...</span></p>
-                        <p><strong>Allergies:</strong> <span id="allergies">Loading...</span></p>
-                        <p><strong>Fitness Level:</strong> <span id="fitnessLevel">Loading...</span></p>
+                        <p><strong>Condiciones Médicas:</strong> <span id="medicalConditions">Loading...</span></p>
+                        <p><strong>Medicamentos:</strong> <span id="medications">Loading...</span></p>
+                        <p><strong>Lesiones/Cirugías:</strong> <span id="injuries">Loading...</span></p>
+                        <p><strong>Alergias:</strong> <span id="allergies">Loading...</span></p>
+                        <p><strong>Nivel de Condición Física:</strong> <span id="fitnessLevel">Loading...</span></p>
                     </div>
                 </div>
                 
                 <div class="profile-section">
-                    <h3 class="section-title">Fitness History</h3>
+                    <h3 class="section-title">Historial de Ejercicio</h3>
                     <div class="section-content">
-                        <p><strong>Exercise History:</strong> <span id="exerciseHistory">Loading...</span></p>
-                        <p><strong>Equipment Access:</strong> <span id="equipmentAccess">Loading...</span></p>
+                        <p><strong>Historial de Ejercicio:</strong> <span id="exerciseHistory">Loading...</span></p>
+                        <p><strong>Acceso a Equipos:</strong> <span id="equipmentAccess">Loading...</span></p>
                     </div>
                 </div>
                 
                 <div class="profile-section">
-                    <h3 class="section-title">Goals & Preferences</h3>
+                    <h3 class="section-title">Metas y Preferencias</h3>
                     <div class="section-content">
-                        <p><strong>Primary Goal:</strong> <span id="primaryGoal">Loading...</span></p>
-                        <p><strong>Secondary Goals:</strong> <span id="secondaryGoals">Loading...</span></p>
-                        <p><strong>Target Timeline:</strong> <span id="timeline">Loading...</span></p>
-                        <p><strong>Sessions/Week:</strong> <span id="sessionsPerWeek">Loading...</span></p>
-                        <p><strong>Sessions/Month:</strong> <span id="sessionsPerMonth">Loading...</span></p>
-                        <p><strong>Preferred Days/Times:</strong> <span id="preferredDaysTimes">Loading...</span></p>
+                        <p><strong>Meta Principal:</strong> <span id="primaryGoal">Loading...</span></p>
+                        <p><strong>Metas Secundarias:</strong> <span id="secondaryGoals">Loading...</span></p>
+                        <p><strong>Plazo Objetivo:</strong> <span id="timeline">Loading...</span></p>
+                        <p><strong>Sesiones por Semana:</strong> <span id="sessionsPerWeek">Loading...</span></p>
+                        <p><strong>Sesiones por Mes:</strong> <span id="sessionsPerMonth">Loading...</span></p>
+                        <p><strong>Días/Horarios Preferidos:</strong> <span id="preferredDaysTimes">Loading...</span></p>
                     </div>
                 </div>
                 
                 <div class="profile-section">
-                    <h3 class="section-title">Lifestyle</h3>
+                    <h3 class="section-title">Estilo de Vida</h3>
                     <div class="section-content">
-                        <p><strong>Activity Level:</strong> <span id="activityLevel">Loading...</span></p>
-                        <p><strong>Sleep Hours:</strong> <span id="sleepHours">Loading...</span></p>
-                        <p><strong>Dietary Restrictions:</strong> <span id="dietaryRestrictions">Loading...</span></p>
-                        <p><strong>Days Exercising/Week:</strong> <span id="daysPerWeek">Loading...</span></p>
+                        <p><strong>Nivel de Actividad:</strong> <span id="activityLevel">Loading...</span></p>
+                        <p><strong>Horas de Sueño:</strong> <span id="sleepHours">Loading...</span></p>
+                        <p><strong>Restricciones Dietéticas:</strong> <span id="dietaryRestrictions">Loading...</span></p>
+                        <p><strong>Días de Ejercicio por Semana:</strong> <span id="daysPerWeek">Loading...</span></p>
                     </div>
                 </div>
                 
                 <div class="profile-section">
-                    <h3 class="section-title">Exercise Preferences</h3>
+                    <h3 class="section-title">Preferencias de Ejercicio</h3>
                     <div class="section-content">
-                        <p><strong>Favorite Exercises:</strong> <span id="favoriteExercises">Loading...</span></p>
-                        <p><strong>Exercises to Avoid:</strong> <span id="avoidExercises">Loading...</span></p>
+                        <p><strong>Ejercicios Favoritos:</strong> <span id="favoriteExercises">Loading...</span></p>
+                        <p><strong>Ejercicios a Evitar:</strong> <span id="avoidExercises">Loading...</span></p>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- Edit Profile Form -->
-        <div class="form-container" id="editProfileForm">
+        <!-- Editarar Perfil Form -->
+        <div class="form-container" id="editPerfilForm">
             <div class="form-header">
-                <h2 class="form-title">Edit Profile</h2>
-                <button class="btn-cancel" onclick="cancelEdit()">Cancel</button>
+                <h2 class="form-title" data-en="Edit" data-es="Editar" data-lang-key="edit">Edit</span>/h2>
+                <button class="btn-cancel" onclick="cancelEditar()" data-en="Cancel" data-es="Cancelar" data-lang-key="cancel">Cancel</span>/button>
             </div>
             
             <div class="form-fields">
                 <div class="form-group">
-                    <label for="editName">Name</label>
-                    <input type="text" id="editName" placeholder="Enter your name">
+                    <label for="editNombre">Nombre</label>
+                    <input type="text" id="editNombre" placeholder="Enter your name">
                 </div>
                 
                 <div class="form-group">
-                    <label for="editPhone">Phone</label>
-                    <input type="tel" id="editPhone" placeholder="Enter your phone number">
+                    <label for="editTeléfono">Teléfono</label>
+                    <input type="tel" id="editTeléfono" placeholder="Enter your phone number">
                 </div>
                 
                 <div class="form-group">
-                    <label for="editEmail">Email</label>
-                    <input type="email" id="editEmail" placeholder="Enter your email">
+                    <label for="editCorreo electrónico">Correo electrónico</label>
+                    <input type="email" id="editCorreo electrónico" placeholder="Enter your email">
                 </div>
                 
                 <div class="form-group">
-                    <label for="editDOB">Date of Birth</label>
+                    <label for="editDOB">Fecha de Nacimiento</label>
                     <input type="date" id="editDOB">
                 </div>
                 
                 <div class="form-group">
-                    <label for="editAge">Age</label>
-                    <input type="number" id="editAge" placeholder="Enter your age">
+                    <label for="editEdad">Edad</label>
+                    <input type="number" id="editEdad" placeholder="Enter your age">
                 </div>
                 
                 <div class="form-group">
-                    <label for="editHeight">Height</label>
-                    <input type="text" id="editHeight" placeholder="Enter your height (e.g., 5'8\")">
+                    <label for="editAltura">Altura</label>
+                    <input type="text" id="editAltura" placeholder="Enter your height (e.g., 5'8\")">
                 </div>
                 
                 <div class="form-group">
-                    <label for="editWeight">Weight</label>
-                    <input type="text" id="editWeight" placeholder="Enter your weight (e.g., 150 lbs)">
+                    <label for="editPeso">Peso</label>
+                    <input type="text" id="editPeso" placeholder="Enter your weight (e.g., 150 lbs)">
                 </div>
                 
                 <div class="form-group">
-                    <label for="editGender">Gender</label>
-                    <select id="editGender">
+                    <label for="editGénero">Género</label>
+                    <select id="editGénero">
                         <option value="">Select gender</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
@@ -631,28 +637,28 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="editOccupation">Occupation</label>
-                    <input type="text" id="editOccupation" placeholder="Enter your occupation">
+                    <label for="editOcupación">Ocupación</label>
+                    <input type="text" id="editOcupación" placeholder="Enter your occupation">
                 </div>
                 
                 <div class="form-group">
-                    <label for="editEmergencyName">Emergency Contact Name</label>
-                    <input type="text" id="editEmergencyName" placeholder="Enter emergency contact name">
+                    <label for="editEmergencyNombre">Contacto de Emergencia Nombre</label>
+                    <input type="text" id="editEmergencyNombre" placeholder="Enter emergency contact name">
                 </div>
                 
                 <div class="form-group">
-                    <label for="editEmergencyPhone">Emergency Phone</label>
-                    <input type="tel" id="editEmergencyPhone" placeholder="Enter emergency phone number">
+                    <label for="editEmergencyTeléfono">Emergency Teléfono</label>
+                    <input type="tel" id="editEmergencyTeléfono" placeholder="Enter emergency phone number">
                 </div>
                 
                 <div class="form-group">
-                    <label for="editEmergencyRelation">Relationship</label>
+                    <label for="editEmergencyRelation">Relación</label>
                     <input type="text" id="editEmergencyRelation" placeholder="Enter relationship">
                 </div>
                 
                 <div class="form-actions">
-                    <button class="btn-cancel" onclick="cancelEdit()">Cancel</button>
-                    <button class="btn-submit" onclick="saveProfile()">Save Changes</button>
+                    <button class="btn-cancel" onclick="cancelEditar()" data-en="Cancel" data-es="Cancelar" data-lang-key="cancel">Cancel</span>/button>
+                    <button class="btn-submit" onclick="savePerfil()">Guardar Cambios</button>
                 </div>
             </div>
         </div>
@@ -660,29 +666,29 @@
         <!-- Intake Form -->
         <div class="form-container" id="intakeForm">
             <div class="form-header">
-                <h2 class="form-title">Client Intake Form</h2>
-                <button class="btn-cancel" onclick="cancelIntakeForm()">Cancel</button>
+                <h2 class="form-title">Formulario de Ingreso del Cliente</h2>
+                <button class="btn-cancel" onclick="cancelIntakeForm()" data-en="Cancel" data-es="Cancelar" data-lang-key="cancel">Cancel</span>/button>
             </div>
             
             <div class="form-fields">
                 <div class="form-group">
-                    <label for="intakeAge">Age</label>
-                    <input type="number" id="intakeAge" placeholder="Enter your age">
+                    <label for="intakeEdad">Edad</label>
+                    <input type="number" id="intakeEdad" placeholder="Enter your age">
                 </div>
                 
                 <div class="form-group">
-                    <label for="intakeHeight">Height</label>
-                    <input type="text" id="intakeHeight" placeholder="Enter your height (e.g., 5'8\")">
+                    <label for="intakeAltura">Altura</label>
+                    <input type="text" id="intakeAltura" placeholder="Enter your height (e.g., 5'8\")">
                 </div>
                 
                 <div class="form-group">
-                    <label for="intakeWeight">Weight</label>
-                    <input type="text" id="intakeWeight" placeholder="Enter your weight (e.g., 150 lbs)">
+                    <label for="intakePeso">Peso</label>
+                    <input type="text" id="intakePeso" placeholder="Enter your weight (e.g., 150 lbs)">
                 </div>
                 
                 <div class="form-group">
-                    <label for="intakeGender">Male/Female</label>
-                    <select id="intakeGender">
+                    <label for="intakeGénero">Male/Female</label>
+                    <select id="intakeGénero">
                         <option value="">Select gender</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
@@ -691,27 +697,27 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="intakeMedicalConditions">Do you have any medical conditions?</label>
+                    <label for="intakeMedicalConditions">¿Tiene alguna condición médica?</label>
                     <textarea id="intakeMedicalConditions" placeholder="Describe any medical conditions"></textarea>
                 </div>
                 
                 <div class="form-group">
-                    <label for="intakeMedications">Are you taking any medications?</label>
-                    <textarea id="intakeMedications" placeholder="List any medications"></textarea>
+                    <label for="intakeMedicamentos">¿Está tomando algún medicamento?</label>
+                    <textarea id="intakeMedicamentos" placeholder="List any medications"></textarea>
                 </div>
                 
                 <div class="form-group">
-                    <label for="intakeInjuries">Any injuries or past surgeries?</label>
+                    <label for="intakeInjuries">¿Alguna lesión o cirugía pasada?</label>
                     <textarea id="intakeInjuries" placeholder="Describe any injuries or surgeries"></textarea>
                 </div>
                 
                 <div class="form-group">
-                    <label for="intakeAllergies">Do you have any allergies?</label>
-                    <textarea id="intakeAllergies" placeholder="List any allergies"></textarea>
+                    <label for="intakeAlergias">¿Tiene alguna alergia?</label>
+                    <textarea id="intakeAlergias" placeholder="List any allergies"></textarea>
                 </div>
                 
                 <div class="form-group">
-                    <label for="intakeFitnessLevel">Current fitness level</label>
+                    <label for="intakeFitnessLevel">Nivel actual de condición física</label>
                     <select id="intakeFitnessLevel">
                         <option value="">Select fitness level</option>
                         <option value="beginner">Beginner</option>
@@ -721,12 +727,12 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="intakeExerciseHistory">Have you worked out before?</label>
+                    <label for="intakeExerciseHistory">¿Ha hecho ejercicio antes?</label>
                     <textarea id="intakeExerciseHistory" placeholder="Describe your exercise history"></textarea>
                 </div>
                 
                 <div class="form-group">
-                    <label for="intakeEquipmentAccess">Do you have workout equipment access at home?</label>
+                    <label for="intakeEquipmentAccess">¿Tiene acceso a equipos de ejercicio en casa?</label>
                     <input type="text" id="intakeEquipmentAccess" placeholder="Describe equipment access at home">
                 </div>
                 
@@ -736,12 +742,12 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="intakeSecondaryGoals">Secondary goals</label>
+                    <label for="intakeSecondaryGoals">Metas secundarias</label>
                     <input type="text" id="intakeSecondaryGoals" placeholder="Describe secondary goals">
                 </div>
                 
                 <div class="form-group">
-                    <label for="intakeTimeline">Target timeline</label>
+                    <label for="intakeTimeline">Plazo objetivo</label>
                     <input type="text" id="intakeTimeline" placeholder="Describe your target timeline">
                 </div>
                 
@@ -772,12 +778,12 @@
                 </div>
                 
                 <div class="form-group">
-                    <label for="intakeFavoriteExercises">Favorite exercises</label>
+                    <label for="intakeFavoriteExercises">Ejercicios favoritos</label>
                     <input type="text" id="intakeFavoriteExercises" placeholder="List your favorite exercises">
                 </div>
                 
                 <div class="form-group">
-                    <label for="intakeAvoidExercises">Exercises to avoid</label>
+                    <label for="intakeAvoidExercises">Ejercicios a evitar</label>
                     <input type="text" id="intakeAvoidExercises" placeholder="List exercises to avoid">
                 </div>
                 
@@ -797,47 +803,47 @@
                 </div>
                 
                 <div class="form-actions">
-                    <button class="btn-cancel" onclick="cancelIntakeForm()">Cancel</button>
-                    <button class="btn-submit" onclick="saveIntakeForm()">Save Intake Form</button>
+                    <button class="btn-cancel" onclick="cancelIntakeForm()" data-en="Cancel" data-es="Cancelar" data-lang-key="cancel">Cancel</span>/button>
+                    <button class="btn-submit" onclick="saveIntakeForm()">Guardar Formulario de Ingreso</button>
                 </div>
             </div>
         </div>
         
-        <!-- Documents Section -->
+        <!-- Documentos Section -->
         <div class="documents-section">
             <div class="documents-header">
-                <h2 class="documents-title">My Documents</h2>
+                <h2 class="documents-title">My Documentos</h2>
             </div>
             
             <div class="documents-list">
                 <div class="document-card">
-                    <div class="document-title">Client Intake Form</div>
-                    <div class="document-description">Initial assessment and health questionnaire</div>
+                    <div class="document-title">Formulario de Ingreso del Cliente</div>
+                    <div class="document-description">Evaluación inicial y cuestionario de salud</div>
                     <div class="document-actions">
-                        <button class="btn-document btn-edit-form" onclick="showIntakeForm()">Edit</button>
-                        <button class="btn-document btn-download" onclick="downloadIntakeForm()">Download</button>
+                        <button class="btn-document btn-edit-form" onclick="showIntakeForm()" data-en="Edit" data-es="Editar" data-lang-key="edit">Edit</span>/button>
+                        <button class="btn-document btn-download" onclick="downloadIntakeForm()">Descargar</button>
                     </div>
                 </div>
                 
                 <div class="document-card">
-                    <div class="document-title">Training Program</div>
-                    <div class="document-description">Your personalized workout plan</div>
-                    <div class="document-actions">
-                        <button class="btn-document btn-download">View</button>
-                    </div>
-                </div>
-                
-                <div class="document-card">
-                    <div class="document-title">Nutrition Guide</div>
-                    <div class="document-description">Personalized nutrition recommendations</div>
+                    <div class="document-title">Programa de Entrenamiento</div>
+                    <div class="document-description">Su plan de ejercicio personalizado</div>
                     <div class="document-actions">
                         <button class="btn-document btn-download">View</button>
                     </div>
                 </div>
                 
                 <div class="document-card">
-                    <div class="document-title">Progress Tracking</div>
-                    <div class="document-description">Historical progress and achievements</div>
+                    <div class="document-title">Guía de Nutrición</div>
+                    <div class="document-description">Recomendaciones nutricionales personalizadas</div>
+                    <div class="document-actions">
+                        <button class="btn-document btn-download">View</button>
+                    </div>
+                </div>
+                
+                <div class="document-card">
+                    <div class="document-title">Seguimiento de Progreso</div>
+                    <div class="document-description">Progreso histórico y logros</div>
                     <div class="document-actions">
                         <button class="btn-document btn-download">View</button>
                     </div>
@@ -846,192 +852,202 @@
         </div>
     </div>
     
+    <script data-en="Edit" data-es="Editar" data-lang-key="edit">Edit</span>/script>
+
+    
     <script>
-        // Set the client name from localStorage
+        // Comprehensive language toggle system
+        const translations = {
+            "en": {
+                "client_portal_login": "Client Portal Login",
+                "access_dashboard": "Access your personalized training dashboard",
+                "username": "Username",
+                "password": "Password",
+                "login": "Login",
+                "forgot_password": "Forgot Password?",
+                "register": "Register",
+                "my_profile": "My Profile",
+                "edit_profile": "Edit Profile",
+                "update_intake": "Update Intake Form",
+                "client_profile": "Client Profile",
+                "personal_info": "Personal Information",
+                "emergency_contact": "Emergency Contact",
+                "health_medical": "Health & Medical",
+                "fitness_history": "Fitness History",
+                "goals_preferences": "Goals & Preferences",
+                "lifestyle": "Lifestyle",
+                "exercise_preferences": "Exercise Preferences",
+                "documents": "Documents",
+                "client_intake_form": "Client Intake Form",
+                "initial_assessment": "Initial assessment and health questionnaire",
+                "edit": "Edit",
+                "download": "Download",
+                "training_program": "Training Program",
+                "personalized_plan": "Your personalized workout plan",
+                "nutrition_guide": "Nutrition Guide",
+                "nutrition_recommendations": "Personalized nutrition recommendations",
+                "progress_tracking": "Progress Tracking",
+                "historical_progress": "Historical progress and achievements",
+                "client_dashboard": "Client Dashboard",
+                "dashboard": "Dashboard",
+                "messages": "Messages",
+                "groups": "Groups",
+                "progress": "Progress",
+                "badges": "Badges",
+                "calendar": "Calendar",
+                "classes": "Classes",
+                "logout": "Logout",
+                "notifications": "Notifications",
+                "profile": "Profile",
+                "save_changes": "Save Changes",
+                "cancel": "Cancel",
+                "name": "Name",
+                "phone": "Phone",
+                "email": "Email",
+                "date_of_birth": "Date of Birth",
+                "age": "Age",
+                "height": "Height",
+                "weight": "Weight",
+                "gender": "Gender",
+                "occupation": "Occupation",
+                "relationship": "Relationship",
+                "medical_conditions": "Medical Conditions",
+                "medications": "Medications",
+                "injuries_surgeries": "Injuries/Surgeries",
+                "allergies": "Allergies",
+                "fitness_level": "Fitness Level",
+                "exercise_history": "Exercise History",
+                "equipment_access": "Equipment Access",
+                "primary_goal": "Primary Goal",
+                "secondary_goals": "Secondary Goals",
+                "target_timeline": "Target Timeline",
+                "sessions_week": "Sessions/Week",
+                "sessions_month": "Sessions/Month",
+                "preferred_times": "Preferred Days/Times",
+                "activity_level": "Activity Level",
+                "sleep_hours": "Sleep Hours",
+                "dietary_restrictions": "Dietary Restrictions",
+                "days_exercising": "Days Exercising/Week",
+                "favorite_exercises": "Favorite Exercises",
+                "exercises_avoid": "Exercises to Avoid"
+            },
+            "es": {
+                "client_portal_login": "Inicio de Sesión del Portal del Cliente",
+                "access_dashboard": "Acceda a su panel de entrenamiento personalizado",
+                "username": "Nombre de usuario",
+                "password": "Contraseña",
+                "login": "Iniciar sesión",
+                "forgot_password": "¿Olvidó su contraseña?",
+                "register": "Registrarse",
+                "my_profile": "Mi Perfil",
+                "edit_profile": "Editar Perfil",
+                "update_intake": "Actualizar Formulario de Ingreso",
+                "client_profile": "Perfil del Cliente",
+                "personal_info": "Información Personal",
+                "emergency_contact": "Contacto de Emergencia",
+                "health_medical": "Salud y Médico",
+                "fitness_history": "Historial de Ejercicio",
+                "goals_preferences": "Metas y Preferencias",
+                "lifestyle": "Estilo de Vida",
+                "exercise_preferences": "Preferencias de Ejercicio",
+                "documents": "Documentos",
+                "client_intake_form": "Formulario de Ingreso del Cliente",
+                "initial_assessment": "Evaluación inicial y cuestionario de salud",
+                "edit": "Editar",
+                "download": "Descargar",
+                "training_program": "Programa de Entrenamiento",
+                "personalized_plan": "Su plan de ejercicio personalizado",
+                "nutrition_guide": "Guía de Nutrición",
+                "nutrition_recommendations": "Recomendaciones nutricionales personalizadas",
+                "progress_tracking": "Seguimiento de Progreso",
+                "historical_progress": "Progreso histórico y logros",
+                "client_dashboard": "Panel del Cliente",
+                "dashboard": "Panel",
+                "messages": "Mensajes",
+                "groups": "Grupos",
+                "progress": "Progreso",
+                "badges": "Insignias",
+                "calendar": "Calendario",
+                "classes": "Clases",
+                "logout": "Cerrar sesión",
+                "notifications": "Notificaciones",
+                "profile": "Perfil",
+                "save_changes": "Guardar Cambios",
+                "cancel": "Cancelar",
+                "name": "Nombre",
+                "phone": "Teléfono",
+                "email": "Correo electrónico",
+                "date_of_birth": "Fecha de Nacimiento",
+                "age": "Edad",
+                "height": "Altura",
+                "weight": "Peso",
+                "gender": "Género",
+                "occupation": "Ocupación",
+                "relationship": "Relación",
+                "medical_conditions": "Condiciones Médicas",
+                "medications": "Medicamentos",
+                "injuries_surgeries": "Lesiones/Cirugías",
+                "allergies": "Alergias",
+                "fitness_level": "Nivel de Condición Física",
+                "exercise_history": "Historial de Ejercicio",
+                "equipment_access": "Acceso a Equipos",
+                "primary_goal": "Meta Principal",
+                "secondary_goals": "Metas Secundarias",
+                "target_timeline": "Plazo Objetivo",
+                "sessions_week": "Sesiones por Semana",
+                "sessions_month": "Sesiones por Mes",
+                "preferred_times": "Días/Horarios Preferidos",
+                "activity_level": "Nivel de Actividad",
+                "sleep_hours": "Horas de Sueño",
+                "dietary_restrictions": "Restricciones Dietéticas",
+                "days_exercising": "Días de Ejercicio por Semana",
+                "favorite_exercises": "Ejercicios Favoritos",
+                "exercises_avoid": "Ejercicios a Evitar"
+            }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
+            
+            // Update all elements with data-lang-key attributes
+            const elements = document.querySelectorAll('[data-lang-key]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update placeholder attributes
+            const placeholders = document.querySelectorAll('[data-lang-placeholder]');
+            placeholders.forEach(element => {
+                const key = element.getAttribute('data-lang-placeholder');
+                if (translations[lang] && translations[lang][key]) {
+                    element.placeholder = translations[lang][key];
+                }
+            });
+            
+            // Update button values
+            const buttons = document.querySelectorAll('[data-lang-button]');
+            buttons.forEach(button => {
+                const key = button.getAttribute('data-lang-button');
+                if (translations[lang] && translations[lang][key]) {
+                    button.value = translations[lang][key];
+                }
+            });
+            
+            // Update the selector
+            const selector = document.getElementById('lang-select');
+            if (selector) {
+                selector.value = lang;
+            }
+        }
+
+        // Initialize language on page load
         document.addEventListener('DOMContentLoaded', function() {
-            const userName = localStorage.getItem('currentUser') || 'Client';
-            document.querySelector('.trainer-name').textContent = userName;
-            
-            // Initialize with sample data for demo
-            loadSampleData();
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            changeLanguage(savedLang);
         });
-        
-        function loadSampleData() {
-            // For demo purposes, load sample data
-            document.getElementById('clientName').textContent = localStorage.getItem('currentUser') || 'John Doe';
-            document.getElementById('clientPhone').textContent = '(555) 123-4567';
-            document.getElementById('clientEmail').textContent = 'client@example.com';
-            document.getElementById('clientDOB').textContent = '01/15/1985';
-            document.getElementById('clientAge').textContent = '35';
-            document.getElementById('clientHeight').textContent = '5\'10"';
-            document.getElementById('clientWeight').textContent = '175 lbs';
-            document.getElementById('clientGender').textContent = 'Male';
-            document.getElementById('clientOccupation').textContent = 'Software Engineer';
-            
-            document.getElementById('emergencyName').textContent = 'Jane Doe';
-            document.getElementById('emergencyPhone').textContent = '(555) 987-6543';
-            document.getElementById('emergencyRelation').textContent = 'Spouse';
-            
-            document.getElementById('medicalConditions').textContent = 'None';
-            document.getElementById('medications').textContent = 'None';
-            document.getElementById('injuries').textContent = 'Previous knee injury (2020)';
-            document.getElementById('allergies').textContent = 'Penicillin';
-            document.getElementById('fitnessLevel').textContent = 'Intermediate';
-            
-            document.getElementById('exerciseHistory').textContent = 'Some gym experience, mainly cardio';
-            document.getElementById('equipmentAccess').textContent = 'Basic dumbbells, resistance bands at home';
-            
-            document.getElementById('primaryGoal').textContent = 'Weight Loss';
-            document.getElementById('secondaryGoals').textContent = 'Strength building';
-            document.getElementById('timeline').textContent = '3 months';
-            document.getElementById('sessionsPerWeek').textContent = '3';
-            document.getElementById('sessionsPerMonth').textContent = '12';
-            document.getElementById('preferredDaysTimes').textContent = 'Mon/Wed/Fri mornings';
-            
-            document.getElementById('activityLevel').textContent = 'Light active';
-            document.getElementById('sleepHours').textContent = '7 hours';
-            document.getElementById('dietaryRestrictions').textContent = 'None';
-            document.getElementById('daysPerWeek').textContent = '4';
-            
-            document.getElementById('favoriteExercises').textContent = 'Running, push-ups, squats';
-            document.getElementById('avoidExercises').textContent = 'Heavy deadlifts (knee concern)';
-        }
-        
-        function editProfile() {
-            // Populate edit form with current values
-            document.getElementById('editName').value = document.getElementById('clientName').textContent;
-            document.getElementById('editPhone').value = document.getElementById('clientPhone').textContent;
-            document.getElementById('editEmail').value = document.getElementById('clientEmail').textContent;
-            
-            // Show edit form, hide profile view
-            document.getElementById('profileView').style.display = 'none';
-            document.getElementById('editProfileForm').style.display = 'block';
-        }
-        
-        function cancelEdit() {
-            // Hide edit form, show profile view
-            document.getElementById('editProfileForm').style.display = 'none';
-            document.getElementById('profileView').style.display = 'block';
-        }
-        
-        function saveProfile() {
-            // Update profile with edited values
-            document.getElementById('clientName').textContent = document.getElementById('editName').value;
-            document.getElementById('clientPhone').textContent = document.getElementById('editPhone').value;
-            document.getElementById('clientEmail').textContent = document.getElementById('editEmail').value;
-            
-            // For demo, also update DOB if entered
-            if (document.getElementById('editDOB').value) {
-                const dob = new Date(document.getElementById('editDOB').value);
-                document.getElementById('clientDOB').textContent = dob.toLocaleDateString();
-                
-                // Calculate age
-                const today = new Date();
-                const age = today.getFullYear() - dob.getFullYear();
-                document.getElementById('clientAge').textContent = age;
-            }
-            
-            // Update new fields
-            document.getElementById('clientAge').textContent = document.getElementById('editAge').value;
-            document.getElementById('clientHeight').textContent = document.getElementById('editHeight').value;
-            document.getElementById('clientWeight').textContent = document.getElementById('editWeight').value;
-            document.getElementById('clientGender').textContent = document.getElementById('editGender').value;
-            
-            document.getElementById('clientOccupation').textContent = document.getElementById('editOccupation').value;
-            document.getElementById('emergencyName').textContent = document.getElementById('editEmergencyName').value;
-            document.getElementById('emergencyPhone').textContent = document.getElementById('editEmergencyPhone').value;
-            document.getElementById('emergencyRelation').textContent = document.getElementById('editEmergencyRelation').value;
-            
-            // Show success message
-            alert('Profile updated successfully!');
-            
-            // Hide edit form, show profile view
-            document.getElementById('editProfileForm').style.display = 'none';
-            document.getElementById('profileView').style.display = 'block';
-        }
-        
-        function showIntakeForm() {
-            // Show intake form, hide profile view
-            document.getElementById('profileView').style.display = 'none';
-            document.getElementById('intakeForm').style.display = 'block';
-        }
-        
-        function cancelIntakeForm() {
-            // Hide intake form, show profile view
-            document.getElementById('intakeForm').style.display = 'none';
-            document.getElementById('profileView').style.display = 'block';
-        }
-        
-        function saveIntakeForm() {
-            // Update profile with intake form values
-            document.getElementById('clientAge').textContent = document.getElementById('intakeAge').value || 'Not specified';
-            document.getElementById('medicalConditions').textContent = document.getElementById('intakeMedicalConditions').value || 'None';
-            document.getElementById('medications').textContent = document.getElementById('intakeMedications').value || 'None';
-            document.getElementById('injuries').textContent = document.getElementById('intakeInjuries').value || 'None';
-            document.getElementById('allergies').textContent = document.getElementById('intakeAllergies').value || 'None';
-            document.getElementById('fitnessLevel').textContent = document.getElementById('intakeFitnessLevel').value || 'Not specified';
-            document.getElementById('exerciseHistory').textContent = document.getElementById('intakeExerciseHistory').value || 'Not specified';
-            document.getElementById('equipmentAccess').textContent = document.getElementById('intakeEquipmentAccess').value || 'Not specified';
-            document.getElementById('primaryGoal').textContent = document.getElementById('intakePrimaryGoal').value || 'Not specified';
-            document.getElementById('secondaryGoals').textContent = document.getElementById('intakeSecondaryGoals').value || 'Not specified';
-            document.getElementById('timeline').textContent = document.getElementById('intakeTimeline').value || 'Not specified';
-            document.getElementById('sessionsPerWeek').textContent = document.getElementById('intakeSessionsPerWeek').value || '0';
-            document.getElementById('activityLevel').textContent = document.getElementById('intakeActivityLevel').value || 'Not specified';
-            document.getElementById('sleepHours').textContent = document.getElementById('intakeSleepHours').value || 'Not specified';
-            document.getElementById('dietaryRestrictions').textContent = document.getElementById('intakeDietaryRestrictions').value || 'None';
-            document.getElementById('favoriteExercises').textContent = document.getElementById('intakeFavoriteExercises').value || 'None';
-            document.getElementById('avoidExercises').textContent = document.getElementById('intakeAvoidExercises').value || 'None';
-            document.getElementById('daysPerWeek').textContent = document.getElementById('intakeDaysPerWeek').value || '0';
-            document.getElementById('preferredDaysTimes').textContent = document.getElementById('intakePreferredDaysTimes').value || 'Not specified';
-            document.getElementById('sessionsPerMonth').textContent = document.getElementById('intakeSessionsPerMonth').value || '0';
-            
-            // Show success message
-            alert('Intake form updated successfully!');
-            
-            // Hide intake form, show profile view
-            document.getElementById('intakeForm').style.display = 'none';
-            document.getElementById('profileView').style.display = 'block';
-        }
-        
-        function downloadIntakeForm() {
-            alert('Downloading intake form...');
-            // In a real implementation, this would download the actual form
-        }
-        
-        function showCalendar() {
-            // Redirect to calendar view
-            window.location.href = 'real-trainerize-dashboard.html';
-            // Then trigger calendar view
-            setTimeout(() => {
-                const event = new Event('calendarRequested');
-                document.dispatchEvent(event);
-            }, 100);
-        }
-        
-        function showProfile() {
-            // Make sure profile is active
-            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-        }
-        
-        function logout() {
-            // Clear authentication token
-            localStorage.removeItem('authToken');
-            localStorage.removeItem('currentUser');
-            
-            // Redirect to login
-            window.location.href = 'login.html';
-        }
-        
-        // Check if user is authenticated
-        function checkAuth() {
-            if (!localStorage.getItem('authToken')) {
-                window.location.href = 'login.html';
-            }
-        }
-        
-        // Run auth check
-        checkAuth();
     </script>
 </body>
 </html>
