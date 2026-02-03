@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logged Out - Coach AP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .logout-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .logout-container h1 {
+            color: #333;
+            margin: 0 0 20px 0;
+        }
+        .btn {
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background: #5a6fd8;
+        }
+    </style>
+</head>
+<body>
+    <div class="logout-container">
+        <h1>You've Been Logged Out</h1>
+        <p>Thank you for visiting your personal training dashboard.</p>
+        <p>Your session has ended securely.</p>
+        
+        <a href="login.html" class="btn">Login Again</a>
+    </div>
+    
+    <script>
+        // In a real implementation, this would make a server call to invalidate the session
+        // For demo purposes, we'll just display the logout page
+    </script>
+</body>
+</html>
