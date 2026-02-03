@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christian Russo - Personal Trainer Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .nav-bar {
+            background-color: #34495e;
+            padding: 10px;
+            text-align: center;
+        }
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            margin: 0 5px;
+            border-radius: 4px;
+        }
+        .nav-bar a:hover {
+            background-color: #2c3e50;
+        }
+        .section {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .section h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .info-card {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+        }
+        .info-card h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .sessions-list, .plans-list, .progress-list, .billing-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sessions-list li, .plans-list li, .progress-list li, .billing-list li {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            border-left: 3px solid #3498db;
+        }
+        .back-link {
+            display: inline-block;
+            margin: 20px;
+            color: #3498db;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #ecf0f1;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Christian Russo - Client Dashboard</h1>
+            <p>Unified Client Information</p>
+        </header>
+        
+        <div class="nav-bar">
+            <a href="index.html">All Clients</a>
+            <a href="#personal">Personal Info</a>
+            <a href="#account">Account</a>
+            <a href="#health">Health</a>
+            <a href="#sessions">Sessions</a>
+            <a href="#nutrition">Nutrition</a>
+            <a href="#billing">Billing</a>
+        </div>
+        
+        <a href="index.html" class="back-link">← Back to All Clients</a>
+        
+        <div class="section" id="personal">
+            <h2>👤 Personal Information</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Contact Details</h3>
+                    <p><strong>Phone:</strong> (786) 922-0118</p>
+                    <p><strong>Email:</strong> NEED INFO</p>
+                    <p><strong>Language:</strong> [to be determined]</p>
+                </div>
+                <div class="info-card">
+                    <h3>Physical Stats</h3>
+                    <p><strong>Age:</strong> [to be added]</p>
+                    <p><strong>Height:</strong> [to be added]</p>
+                    <p><strong>Current Weight:</strong> [to be added]</p>
+                    <p><strong>Target Weight:</strong> [to be added]</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" id="account">
+            <h2>💳 Account Information</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Account Details</h3>
+                    <p><strong>Account Type:</strong> ** Demo Client</p>
+                    <p><strong>Sessions/Month:</strong> [to be added]</p>
+                    <p><strong>Sessions Remaining:</strong> [to be added]</p>
+                    <p><strong>Billing Date:</strong> [to be added]</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" id="health">
+            <h2>🏥 Health & Medical</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Health Information</h3>
+                    <p><strong>Medical Conditions:</strong> [n/a]</p>
+                    <p><strong>Medications:</strong> [n/a]</p>
+                    <p><strong>Injuries/Surgeries:</strong> [n/a]</p>
+                    <p><strong>Allergies:</strong> [n/a]</p>
+                    <p><strong>Fitness Level:</strong> [n/a]</p>
+                </div>
+                <div class="info-card">
+                    <h3>Goals & Lifestyle</h3>
+                    <p><strong>Primary Goal:</strong> [to be added]</p>
+                    <p><strong>Secondary Goals:</strong> [to be added]</p>
+                    <p><strong>Activity Level:</strong> [n/a]</p>
+                    <p><strong>Sleep Average:</strong> [n/a]</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section" id="sessions">
+            <h2>🗓️ Sessions</h2>
+            <h3>Recent Sessions</h3>
+        <p>No recent sessions recorded</p>
+            <h3>Upcoming Sessions</h3>
+        <p>No upcoming sessions scheduled</p>
+        </div>
+        
+        <div class="section" id="nutrition">
+            <h2>🥗 Nutrition</h2>
+            <h3>Nutrition Plans</h3>
+        <p>No nutrition plans assigned</p>
+            <h3>Nutrition Progress</h3>
+        <p>No nutrition progress tracked</p>
+        </div>
+        
+        <div class="section" id="billing">
+            <h2>💰 Billing Information</h2>
+        <p>No billing information recorded</p>
+        </div>
+        
+        <div class="section">
+            <h2>📝 Notes & Injuries</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>Notes</h3>
+                    <p>{client_dict['notes'] or 'No notes available'}</p>
+                </div>
+                <div class="info-card">
+                    <h3>Injuries/Pain</h3>
+                    <p>{client_dict['injuries_pain'] or 'No injuries or pain reported'}</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Client Dashboard | Generated: 2026-02-02 13:35:23</p>
+        </footer>
+    </div>
+</body>
+</html>
+        
