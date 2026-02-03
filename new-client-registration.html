@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Nuevo Cliente - Coach AP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #2c3e50;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+        
+        .form-container {
+            padding: 40px;
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3aa9dd;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #3aa9dd;
+            box-shadow: 0 0 0 2px rgba(58, 169, 221, 0.2);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 5px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+        }
+        
+        .radio-option input[type="radio"] {
+            width: auto;
+            margin-right: 5px;
+        }
+        
+        .submit-section {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .btn-register {
+            background: linear-gradient(135deg, #3aa9dd 0%, #2c3e50 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(58, 169, 221, 0.4);
+        }
+        
+        .btn-register:active {
+            transform: translateY(0);
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="language-selector" style="position: fixed; top: 10px; right: 10px; z-index: 1000; background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <select id="lang-select" onchange="changeLanguage()" style="padding: 5px; border: 1px solid #ddd; border-radius: 3px;">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
+    <div class="container">
+        <div class="header">
+            <h1>Registro de Nuevo Cliente</h1>
+            <p>Welcome to Coach AP's Personal Programa de Entrenamiento</p>
+        </div>
+        
+        <div class="form-container">
+            <form id="newClientForm">
+                <div class="form-section">
+                    <h2 class="section-title">Información Personal</h2>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="firstNombre">First Nombre *</label>
+                            <input type="text" id="firstNombre" name="firstNombre" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lastNombre">Last Nombre *</label>
+                            <input type="text" id="lastNombre" name="lastNombre" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="phone">Teléfono *</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Correo electrónico *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="dateOfBirth">Fecha de Nacimiento</label>
+                            <input type="date" id="dateOfBirth" name="dateOfBirth">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="age">Edad</label>
+                            <input type="number" id="age" name="age" min="18" max="100">
+                        </div>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="height">Altura (e.g., 5'8")</label>
+                            <input type="text" id="height" name="height" placeholder="e.g., 5'8"">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="weight">Peso (e.g., 150 lbs)</label>
+                            <input type="text" id="weight" name="weight" placeholder="e.g., 150 lbs">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Género *</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="genderMale" name="gender" value="male" required>
+                                <label for="genderMale">Male</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="genderFemale" name="gender" value="female" required>
+                                <label for="genderFemale">Female</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="genderOther" name="gender" value="other" required>
+                                <label for="genderOther">Other</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="occupation">Ocupación</label>
+                        <input type="text" id="occupation" name="occupation" placeholder="Your occupation">
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2 class="section-title">Contacto de Emergencia</h2>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="emergencyNombre">Contacto de Emergencia Nombre *</label>
+                            <input type="text" id="emergencyNombre" name="emergencyNombre" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="emergencyTeléfono">Emergency Teléfono *</label>
+                            <input type="tel" id="emergencyTeléfono" name="emergencyTeléfono" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="emergencyRelación">Relación</label>
+                        <input type="text" id="emergencyRelación" name="emergencyRelación" placeholder="Relación to client">
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2 class="section-title">Salud y Médico</h2>
+                    
+                    <div class="form-group">
+                        <label for="medicalConditions">¿Tiene alguna condición médica?</label>
+                        <textarea id="medicalConditions" name="medicalConditions" rows="3" placeholder="Please describe any medical conditions"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="medications">¿Está tomando algún medicamento?</label>
+                        <textarea id="medications" name="medications" rows="3" placeholder="Please list any medications"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="injuries">¿Alguna lesión o cirugía pasada?</label>
+                        <textarea id="injuries" name="injuries" rows="3" placeholder="Please describe any injuries or past surgeries"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="allergies">¿Tiene alguna alergia?</label>
+                        <textarea id="allergies" name="allergies" rows="3" placeholder="Please list any allergies"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Nivel actual de condición física *</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="fitnessBeginner" name="fitnessLevel" value="beginner" required>
+                                <label for="fitnessBeginner">Beginner</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="fitnessIntermediate" name="fitnessLevel" value="intermediate" required>
+                                <label for="fitnessIntermediate">Intermediate</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="fitnessAdvanced" name="fitnessLevel" value="advanced" required>
+                                <label for="fitnessAdvanced">Advanced</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2 class="section-title">Historial de Ejercicio</h2>
+                    
+                    <div class="form-group">
+                        <label for="exerciseHistory">¿Ha hecho ejercicio antes?</label>
+                        <textarea id="exerciseHistory" name="exerciseHistory" rows="3" placeholder="Describe your exercise history"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="equipmentAccess">¿Tiene acceso a equipos de ejercicio en casa?</label>
+                        <input type="text" id="equipmentAccess" name="equipmentAccess" placeholder="Describe equipment access at home">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="gymMembership">Do you have a gym membership?</label>
+                        <select id="gymMembership" name="gymMembership">
+                            <option value="">Select option</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                            <option value="plan-to-get">Plan to get one</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2 class="section-title">Goals</h2>
+                    
+                    <div class="form-group">
+                        <label for="primaryGoal">Meta principal *</label>
+                        <input type="text" id="primaryGoal" name="primaryGoal" required placeholder="Describe your primary goal">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="secondaryGoals">Metas secundarias</label>
+                        <input type="text" id="secondaryGoals" name="secondaryGoals" placeholder="Describe secondary goals">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="timeline">Plazo objetivo</label>
+                        <input type="text" id="timeline" name="timeline" placeholder="Describe your target timeline (e.g., 3 months)">
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="sessionsPerWeek">Sesiones por semana deseadas *</label>
+                            <input type="number" id="sessionsPerWeek" name="sessionsPerWeek" min="1" max="7" required placeholder="Number of sessions per week">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="sessionsPerMonth">Sesiones por mes *</label>
+                            <input type="number" id="sessionsPerMonth" name="sessionsPerMonth" min="1" max="30" required placeholder="Number of sessions per month">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2 class="section-title">Estilo de Vida</h2>
+                    
+                    <div class="form-group">
+                        <label>Nivel típico de actividad *</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="activitySedentary" name="activityLevel" value="sedentary" required>
+                                <label for="activitySedentary">Sedentary</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="activityLight" name="activityLevel" value="light-active" required>
+                                <label for="activityLight">Light active</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="activityActive" name="activityLevel" value="active" required>
+                                <label for="activityActive">Active</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="activityVery" name="activityLevel" value="very-active" required>
+                                <label for="activityVery">Very active</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="sleepHours">Promedio de sueño *</label>
+                            <input type="number" id="sleepHours" name="sleepHours" min="1" max="24" required placeholder="Hours of sleep per night">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="waterIntake">Ingesta de agua *</label>
+                            <input type="number" id="waterIntake" name="waterIntake" min="1" max="20" required placeholder="Glasses of water per day">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dietaryRestrictions">Restricciones dietéticas (alergias) *</label>
+                        <textarea id="dietaryRestrictions" name="dietaryRestrictions" rows="2" required placeholder="List any dietary restrictions or allergies"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2 class="section-title">Preferences</h2>
+                    
+                    <div class="form-group">
+                        <label for="favoriteExercises">Ejercicios favoritos</label>
+                        <input type="text" id="favoriteExercises" name="favoriteExercises" placeholder="List your favorite exercises">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="avoidExercises">Ejercicios a evitar</label>
+                        <input type="text" id="avoidExercises" name="avoidExercises" placeholder="List exercises to avoid">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="daysPerWeek">¿Cuántos días a la semana planea hacer ejercicio? *</label>
+                        <input type="number" id="daysPerWeek" name="daysPerWeek" min="1" max="7" required placeholder="Number of days per week">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="preferredDaysTimes">Días/horarios preferidos para ejercitarse *</label>
+                        <input type="text" id="preferredDaysTimes" name="preferredDaysTimes" required placeholder="Preferred workout days and times">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="billingPreference">Preferencia de fecha de facturación *</label>
+                        <select id="billingPreference" name="billingPreference" required>
+                            <option value="">Select billing date</option>
+                            <option value="1st">1st of the month</option>
+                            <option value="15th">15th of the month</option>
+                            <option value="30th">End of month</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2 class="section-title">Terms & Agreement</h2>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="termsAgreement" name="termsAgreement" required>
+                            <label for="termsAgreement">Acepto los términos y condiciones del programa de entrenamiento personal *</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="privacyAgreement" name="privacyAgreement" required>
+                            <label for="privacyAgreement">Consiento la recopilación y uso de mi información personal como se describe en la política de privacidad *</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="healthAgreement" name="healthAgreement" required>
+                            <label for="healthAgreement">Confirmo que la información de salud proporcionada es precisa y completa *</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="submit-section">
+                    <button type="submit" class="btn-register">Registrarse as New Client</button>
+                </div>
+                
+                <div id="successMessage" class="success-message">
+                    <h3>¡Registro Exitoso!</h3>
+                    <p>Su registro ha sido enviado. Recibirá credenciales de inicio de sesión pronto. Por favor contacte a Coach AP para obtener su información de inicio de sesión.</p>
+                </div>
+                
+                <div id="errorMessage" class="error-message">
+                    <h3>Error Enviando Registro</h3>
+                    <p id="errorMessageText">Ocurrió un error al enviar su registro. Por favor intente de nuevo.</p>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    
+    <script>
+        // Comprehensive language toggle system
+        const translations = {
+            "en": {
+                "client_portal_login": "Client Portal Login",
+                "access_dashboard": "Access your personalized training dashboard",
+                "username": "Username",
+                "password": "Password",
+                "login": "Login",
+                "forgot_password": "Forgot Password?",
+                "register": "Register",
+                "my_profile": "My Profile",
+                "edit_profile": "Edit Profile",
+                "update_intake": "Update Intake Form",
+                "client_profile": "Client Profile",
+                "personal_info": "Personal Information",
+                "emergency_contact": "Emergency Contact",
+                "health_medical": "Health & Medical",
+                "fitness_history": "Fitness History",
+                "goals_preferences": "Goals & Preferences",
+                "lifestyle": "Lifestyle",
+                "exercise_preferences": "Exercise Preferences",
+                "documents": "Documents",
+                "client_intake_form": "Client Intake Form",
+                "initial_assessment": "Initial assessment and health questionnaire",
+                "edit": "Edit",
+                "download": "Download",
+                "training_program": "Training Program",
+                "personalized_plan": "Your personalized workout plan",
+                "nutrition_guide": "Nutrition Guide",
+                "nutrition_recommendations": "Personalized nutrition recommendations",
+                "progress_tracking": "Progress Tracking",
+                "historical_progress": "Historical progress and achievements",
+                "client_dashboard": "Client Dashboard",
+                "dashboard": "Dashboard",
+                "messages": "Messages",
+                "groups": "Groups",
+                "progress": "Progress",
+                "badges": "Badges",
+                "calendar": "Calendar",
+                "classes": "Classes",
+                "logout": "Logout",
+                "notifications": "Notifications",
+                "profile": "Profile",
+                "save_changes": "Save Changes",
+                "cancel": "Cancel",
+                "name": "Name",
+                "phone": "Phone",
+                "email": "Email",
+                "date_of_birth": "Date of Birth",
+                "age": "Age",
+                "height": "Height",
+                "weight": "Weight",
+                "gender": "Gender",
+                "occupation": "Occupation",
+                "relationship": "Relationship",
+                "medical_conditions": "Medical Conditions",
+                "medications": "Medications",
+                "injuries_surgeries": "Injuries/Surgeries",
+                "allergies": "Allergies",
+                "fitness_level": "Fitness Level",
+                "exercise_history": "Exercise History",
+                "equipment_access": "Equipment Access",
+                "primary_goal": "Primary Goal",
+                "secondary_goals": "Secondary Goals",
+                "target_timeline": "Target Timeline",
+                "sessions_week": "Sessions/Week",
+                "sessions_month": "Sessions/Month",
+                "preferred_times": "Preferred Days/Times",
+                "activity_level": "Activity Level",
+                "sleep_hours": "Sleep Hours",
+                "dietary_restrictions": "Dietary Restrictions",
+                "days_exercising": "Days Exercising/Week",
+                "favorite_exercises": "Favorite Exercises",
+                "exercises_avoid": "Exercises to Avoid"
+            },
+            "es": {
+                "client_portal_login": "Inicio de Sesión del Portal del Cliente",
+                "access_dashboard": "Acceda a su panel de entrenamiento personalizado",
+                "username": "Nombre de usuario",
+                "password": "Contraseña",
+                "login": "Iniciar sesión",
+                "forgot_password": "¿Olvidó su contraseña?",
+                "register": "Registrarse",
+                "my_profile": "Mi Perfil",
+                "edit_profile": "Editar Perfil",
+                "update_intake": "Actualizar Formulario de Ingreso",
+                "client_profile": "Perfil del Cliente",
+                "personal_info": "Información Personal",
+                "emergency_contact": "Contacto de Emergencia",
+                "health_medical": "Salud y Médico",
+                "fitness_history": "Historial de Ejercicio",
+                "goals_preferences": "Metas y Preferencias",
+                "lifestyle": "Estilo de Vida",
+                "exercise_preferences": "Preferencias de Ejercicio",
+                "documents": "Documentos",
+                "client_intake_form": "Formulario de Ingreso del Cliente",
+                "initial_assessment": "Evaluación inicial y cuestionario de salud",
+                "edit": "Editar",
+                "download": "Descargar",
+                "training_program": "Programa de Entrenamiento",
+                "personalized_plan": "Su plan de ejercicio personalizado",
+                "nutrition_guide": "Guía de Nutrición",
+                "nutrition_recommendations": "Recomendaciones nutricionales personalizadas",
+                "progress_tracking": "Seguimiento de Progreso",
+                "historical_progress": "Progreso histórico y logros",
+                "client_dashboard": "Panel del Cliente",
+                "dashboard": "Panel",
+                "messages": "Mensajes",
+                "groups": "Grupos",
+                "progress": "Progreso",
+                "badges": "Insignias",
+                "calendar": "Calendario",
+                "classes": "Clases",
+                "logout": "Cerrar sesión",
+                "notifications": "Notificaciones",
+                "profile": "Perfil",
+                "save_changes": "Guardar Cambios",
+                "cancel": "Cancelar",
+                "name": "Nombre",
+                "phone": "Teléfono",
+                "email": "Correo electrónico",
+                "date_of_birth": "Fecha de Nacimiento",
+                "age": "Edad",
+                "height": "Altura",
+                "weight": "Peso",
+                "gender": "Género",
+                "occupation": "Ocupación",
+                "relationship": "Relación",
+                "medical_conditions": "Condiciones Médicas",
+                "medications": "Medicamentos",
+                "injuries_surgeries": "Lesiones/Cirugías",
+                "allergies": "Alergias",
+                "fitness_level": "Nivel de Condición Física",
+                "exercise_history": "Historial de Ejercicio",
+                "equipment_access": "Acceso a Equipos",
+                "primary_goal": "Meta Principal",
+                "secondary_goals": "Metas Secundarias",
+                "target_timeline": "Plazo Objetivo",
+                "sessions_week": "Sesiones por Semana",
+                "sessions_month": "Sesiones por Mes",
+                "preferred_times": "Días/Horarios Preferidos",
+                "activity_level": "Nivel de Actividad",
+                "sleep_hours": "Horas de Sueño",
+                "dietary_restrictions": "Restricciones Dietéticas",
+                "days_exercising": "Días de Ejercicio por Semana",
+                "favorite_exercises": "Ejercicios Favoritos",
+                "exercises_avoid": "Ejercicios a Evitar"
+            }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
+            
+            // Update all elements with data-lang-key attributes
+            const elements = document.querySelectorAll('[data-lang-key]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update placeholder attributes
+            const placeholders = document.querySelectorAll('[data-lang-placeholder]');
+            placeholders.forEach(element => {
+                const key = element.getAttribute('data-lang-placeholder');
+                if (translations[lang] && translations[lang][key]) {
+                    element.placeholder = translations[lang][key];
+                }
+            });
+            
+            // Update button values
+            const buttons = document.querySelectorAll('[data-lang-button]');
+            buttons.forEach(button => {
+                const key = button.getAttribute('data-lang-button');
+                if (translations[lang] && translations[lang][key]) {
+                    button.value = translations[lang][key];
+                }
+            });
+            
+            // Update the selector
+            const selector = document.getElementById('lang-select');
+            if (selector) {
+                selector.value = lang;
+            }
+        }
+
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            changeLanguage(savedLang);
+        });
+    </script>
+
+    <script>
+        // Language toggle functionality
+        function changeLanguage() {
+            const langSelect = document.getElementById('lang-select');
+            const selectedLang = langSelect.value;
+            
+            // Store the selected language in localStorage
+            localStorage.setItem('preferredLanguage', selectedLang);
+            
+            // Reload the page to apply language changes
+            location.reload();
+        }
+        
+        // Set the language on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            const langSelect = document.getElementById('lang-select');
+            if (langSelect) {
+                langSelect.value = savedLang;
+            }
+        });
+    </script>
+</body>
+</html>

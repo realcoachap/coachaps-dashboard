@@ -1,0 +1,757 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach AP - Schedule</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .navigation {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .navigation a {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 0 10px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .navigation a:hover {
+            background-color: #45a049;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .status-scheduled {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .status-completed {
+            color: #2196F3;
+            font-weight: bold;
+        }
+        .status-cancelled {
+            color: #f44336;
+            font-weight: bold;
+        }
+        .upcoming-section {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+    
+    <script>
+        // Check if user is authenticated by looking for session token
+        function isAuthenticated() {
+            // In a real implementation, this would check for a valid session token
+            // For demo purposes, we'll use localStorage to simulate authentication
+            return localStorage.getItem('authToken') !== null;
+        }
+        
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Don't redirect on login, register, or logout pages
+            const currentPath = window.location.pathname;
+            const loginPages = ['/login.html', '/register.html', '/forgot-password.html', '/logout.html', '/landing.html'];
+            
+            if (!loginPages.some(page => currentPath.includes(page)) && !isAuthenticated()) {
+                // Redirect to login page
+                console.log('Redirecting to login - no authentication found');
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+    
+</head>
+<body>
+    <div id="language-selector" style="position: fixed; top: 10px; right: 10px; z-index: 1000; background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <select id="lang-select" onchange="changeLanguage(this.value)" style="padding: 5px; border: 1px solid #ddd; border-radius: 3px;">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
+
+    <div id="auth-check-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: flex; justify-content: center; align-items: center; text-align: center;">
+        <div>
+            <h2>Verifying Authentication...</h2>
+            <p>Please wait while we check your authorization.</p>
+        </div>
+    </div>
+    <script>
+        // Hide overlay once auth check is complete
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const overlay = document.getElementById('auth-check-overlay');
+                if (overlay) {
+                    overlay.style.display = 'none';
+                }
+            }, 500); // Short delay to show the overlay briefly
+        });
+    </script>
+    
+    <div class="container">
+        <h1>Coach AP - Training Schedule</h1>
+        
+        
+        <div class="navigation">
+            <a href="index.html">Trainer Panel</a>
+            <a href="schedule.html">Schedule</a>
+            <a href="calendar.html" data-en="Calendar" data-es="Calendario" data-lang-key="calendar">Calendar</span>/a>
+            <a href="nutrition.html">Nutrition</a>
+            <a href="knowledge.html">Knowledge</a>
+            <a href="books.html">Books</a>
+            <a href="reports.html">Reports</a>
+            <a href="login.html">Client Iniciar sesión</a>
+        </div>
+
+
+        
+        <div class="section">
+            <h2>Upcoming Sessions (Next 7 Days)</h2>
+            <table><thead><tr><th>Date/Time</th><th>Client</th><th>Type</th><th>Location</th><th>Status</th></tr></thead><tbody>
+        <tr>
+            <td>2026-02-03 07:00:00</td>
+            <td>Naidaly Camacho</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-03 09:30:00</td>
+            <td>Alfredo Herrera</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-03 10:00:00</td>
+            <td>Luis Ortega</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-03 15:00:00</td>
+            <td>Gabriel Neumann</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-03 17:00:00</td>
+            <td>Luz Gonzalez</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-04 08:00:00</td>
+            <td>Arelys Bajuelos</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-04 11:00:00</td>
+            <td>Mario Pestana</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-04 14:00:00</td>
+            <td>Celia Leon</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-04 14:30:00</td>
+            <td>Celia Leon</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-05 08:00:00</td>
+            <td>Arelys Bajuelos</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-05 17:00:00</td>
+            <td>Luz Gonzalez</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-06 11:00:00</td>
+            <td>Celia Leon</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-06 11:30:00</td>
+            <td>Celia Leon</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-06 16:30:00</td>
+            <td>Norma Miranda</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-06 17:00:00</td>
+            <td>Norma Miranda</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-07 14:00:00</td>
+            <td>Gabriel Neumann</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-07 14:30:00</td>
+            <td>Yarenis Diaz</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-08 12:00:00</td>
+            <td>Yarenis Diaz</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 08:00:00</td>
+            <td>Juan Rodriguez</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 08:30:00</td>
+            <td>Juan Rodriguez</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 09:00:00</td>
+            <td>David Hernandez</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 10:00:00</td>
+            <td>Luis Vargas</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 12:00:00</td>
+            <td>Hanna Leiser</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 12:30:00</td>
+            <td>Hanna Leiser</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 13:30:00</td>
+            <td>Celia Leon</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 14:00:00</td>
+            <td>Celia Leon</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 15:00:00</td>
+            <td>Shehnaz Bengali</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 18:00:00</td>
+            <td>Ana Bolivar</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        </tbody></table>
+        </div>
+        
+        <div class="section">
+            <h2>All Scheduled Sessions</h2>
+            <table><thead><tr><th>Date/Time</th><th>Client</th><th>Type</th><th>Location</th><th>Status</th></tr></thead><tbody>
+        <tr>
+            <td>2026-02-01 14:00:00</td>
+            <td>Gabriel Neumann</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-01 14:30:00</td>
+            <td>Yarenis Diaz</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-02 08:00:00</td>
+            <td>Arelys Bajuelos</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-02 11:00:00</td>
+            <td>Aramis Perez</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-02 11:30:00</td>
+            <td>Maria Cobenas</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-02 14:00:00</td>
+            <td>Celia Leon</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-02 14:30:00</td>
+            <td>Celia Leon</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-02 15:30:00</td>
+            <td>Shehnaz Bengali</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-02 17:00:00</td>
+            <td>Luz Gonzalez</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-02 18:00:00</td>
+            <td>Ana Bolivar</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-02 20:00:00</td>
+            <td>Irina Wilkins</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-03 07:00:00</td>
+            <td>Naidaly Camacho</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-03 09:30:00</td>
+            <td>Alfredo Herrera</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-03 10:00:00</td>
+            <td>Luis Ortega</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-03 15:00:00</td>
+            <td>Gabriel Neumann</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-03 17:00:00</td>
+            <td>Luz Gonzalez</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-04 08:00:00</td>
+            <td>Arelys Bajuelos</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-04 11:00:00</td>
+            <td>Mario Pestana</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-04 14:00:00</td>
+            <td>Celia Leon</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-04 14:30:00</td>
+            <td>Celia Leon</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-05 08:00:00</td>
+            <td>Arelys Bajuelos</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-05 17:00:00</td>
+            <td>Luz Gonzalez</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-06 11:00:00</td>
+            <td>Celia Leon</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-06 11:30:00</td>
+            <td>Celia Leon</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-06 16:30:00</td>
+            <td>Norma Miranda</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-06 17:00:00</td>
+            <td>Norma Miranda</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-07 14:00:00</td>
+            <td>Gabriel Neumann</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-07 14:30:00</td>
+            <td>Yarenis Diaz</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-08 12:00:00</td>
+            <td>Yarenis Diaz</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 08:00:00</td>
+            <td>Juan Rodriguez</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 08:30:00</td>
+            <td>Juan Rodriguez</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 09:00:00</td>
+            <td>David Hernandez</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 10:00:00</td>
+            <td>Luis Vargas</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 12:00:00</td>
+            <td>Hanna Leiser</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 12:30:00</td>
+            <td>Hanna Leiser</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 13:30:00</td>
+            <td>Celia Leon</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 14:00:00</td>
+            <td>Celia Leon</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 15:00:00</td>
+            <td>Shehnaz Bengali</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-09 18:00:00</td>
+            <td>Ana Bolivar</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-10 11:00:00</td>
+            <td>Celia Leon</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-10 11:30:00</td>
+            <td>Celia Leon</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-11 11:30:00</td>
+            <td>Celia Leon</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-11 14:00:00</td>
+            <td>Yarenis Diaz</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-13 10:30:00</td>
+            <td>Yarenis Diaz</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-13 11:00:00</td>
+            <td>Celia Leon</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        
+        <tr>
+            <td>2026-02-13 11:30:00</td>
+            <td>Celia Leon</td>
+            <td>Training</td>
+            <td>LA Fitness</td>
+            <td class="status-scheduled">Scheduled</td>
+        </tr>
+        </tbody></table>
+        </div>
+    </div>
+
+    <script data-en="Name" data-es="Nombre" data-lang-key="name">Name</span>/script>
+</body>
+</html>
+    
