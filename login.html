@@ -127,26 +127,21 @@
         });
         
         function authenticateUser(username, password) {
-            // This would typically make an API call to the backend
-            // For demo purposes, we'll just redirect to dashboard
+            // This would typically make an API call to the backend for real authentication
+            // For demo purposes, we'll simulate successful authentication
             console.log('Attempting to authenticate user:', username);
             
-            // Simulate successful authentication after delay
+            // Simulate network request delay
             setTimeout(function() {
                 // In a real system, this would validate credentials server-side
-                // and set a session cookie
+                // and return a session token that we'd store locally
+                // For demo, we'll just set a mock token
+                localStorage.setItem('authToken', 'mock-auth-token-' + Date.now());
+                localStorage.setItem('currentUser', username);
+                
+                // Redirect to client dashboard
                 window.location.href = 'client-dashboard.html';
-            }, 1000);
-        }
-        
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-            
-            setTimeout(function() {
-                errorDiv.style.display = 'none';
-            }, 5000);
+            }, 1500);
         }
     </script>
     <script>
@@ -174,32 +169,21 @@
         });
         
         function authenticateUser(username, password) {
-            // This would typically make an API call to the backend
-            // For demo purposes, we'll just redirect to dashboard after a short delay
+            // This would typically make an API call to the backend for real authentication
+            // For demo purposes, we'll simulate successful authentication
             console.log('Attempting to authenticate user:', username);
             
             // Simulate network request delay
             setTimeout(function() {
                 // In a real system, this would validate credentials server-side
-                // and set a session cookie before redirecting
-                // For demo, we'll just redirect to client dashboard
+                // and return a session token that we'd store locally
+                // For demo, we'll just set a mock token
+                localStorage.setItem('authToken', 'mock-auth-token-' + Date.now());
+                localStorage.setItem('currentUser', username);
+                
+                // Redirect to client dashboard
                 window.location.href = 'client-dashboard.html';
             }, 1500);
-        }
-        
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-            
-            // Re-enable button if it was disabled
-            const submitBtn = document.querySelector('.btn');
-            submitBtn.textContent = 'Login';
-            submitBtn.disabled = false;
-            
-            setTimeout(function() {
-                errorDiv.style.display = 'none';
-            }, 5000);
         }
     </script></body>
 </html>

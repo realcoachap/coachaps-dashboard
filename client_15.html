@@ -94,8 +94,50 @@
             color: #7f8c8d;
         }
     </style>
+    
+    <script>
+        // Check if user is authenticated by looking for session token
+        function isAuthenticated() {
+            // In a real implementation, this would check for a valid session token
+            // For demo purposes, we'll use localStorage to simulate authentication
+            return localStorage.getItem('authToken') !== null;
+        }
+        
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Don't redirect on login, register, or logout pages
+            const currentPath = window.location.pathname;
+            const loginPages = ['/login.html', '/register.html', '/forgot-password.html', '/logout.html', '/landing.html'];
+            
+            if (!loginPages.some(page => currentPath.includes(page)) && !isAuthenticated()) {
+                // Redirect to login page
+                console.log('Redirecting to login - no authentication found');
+                window.location.href = 'login.html';
+            }
+        });
+    </script>
+    
 </head>
 <body>
+
+    <div id="auth-check-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: flex; justify-content: center; align-items: center; text-align: center;">
+        <div>
+            <h2>Verifying Authentication...</h2>
+            <p>Please wait while we check your authorization.</p>
+        </div>
+    </div>
+    <script>
+        // Hide overlay once auth check is complete
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const overlay = document.getElementById('auth-check-overlay');
+                if (overlay) {
+                    overlay.style.display = 'none';
+                }
+            }, 500); // Short delay to show the overlay briefly
+        });
+    </script>
+    
     <div class="container">
         <header>
             <h1>Mario Pestana - Client Dashboard</h1>

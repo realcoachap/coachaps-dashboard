@@ -55,5 +55,17 @@
         // In a real implementation, this would make a server call to invalidate the session
         // For demo purposes, we'll just display the logout page
     </script>
+    
+    <script>
+        // Clear authentication token on logout
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('currentUser');
+        
+        // Add a delay before redirect to show logout confirmation
+        setTimeout(function() {
+            window.location.href = 'login.html';
+        }, 2000);
+    </script>
+
 </body>
 </html>
