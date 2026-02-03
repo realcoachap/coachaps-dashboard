@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Profile - Coach AP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #2c3e50;
+            overflow-x: hidden;
+        }
+        
+        .sidebar {
+            width: 70px;
+            background: #2c3e50;
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+            transition: width 0.3s;
+        }
+        
+        .sidebar:hover {
+            width: 220px;
+        }
+        
+        .sidebar-header {
+            padding: 20px 10px;
+            text-align: center;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .trainer-logo {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            color: #3aa9dd;
+        }
+        
+        .trainer-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .sidebar-menu {
+            padding: 15px 0;
+        }
+        
+        .menu-item {
+            padding: 15px 10px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #ecf0f1;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        
+        .menu-item:hover, .menu-item.active {
+            background: rgba(255,255,255,0.1);
+            border-left: 3px solid #3aa9dd;
+        }
+        
+        .menu-item i {
+            margin-right: 15px;
+            width: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        
+        .menu-text {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .sidebar:hover .menu-text {
+            opacity: 1;
+        }
+        
+        .main-content {
+            margin-left: 70px;
+            padding: 20px;
+            transition: margin-left 0.3s;
+        }
+        
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e6ed;
+        }
+        
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .notification-btn, .user-profile {
+            background: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+        
+        .profile-card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .profile-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-edit {
+            background: #3aa9dd;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .btn-edit:hover {
+            background: #2a98cc;
+        }
+        
+        .btn-save {
+            background: #2ecc71;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .btn-save:hover {
+            background: #27ae60;
+        }
+        
+        .profile-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .profile-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 3px solid #3aa9dd;
+        }
+        
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .section-content {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .form-container {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            display: none;
+        }
+        
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .form-fields {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn-cancel {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .btn-cancel:hover {
+            background: #7f8c8d;
+        }
+        
+        .btn-submit {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .btn-submit:hover {
+            background: #2980b9;
+        }
+        
+        .documents-section {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .documents-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .documents-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .documents-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .document-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #eee;
+            transition: transform 0.2s;
+        }
+        
+        .document-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .document-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .document-description {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+        
+        .document-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn-document {
+            background: #9b59b6;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .btn-document:hover {
+            background: #8e44ad;
+        }
+        
+        .btn-download {
+            background: #3498db;
+        }
+        
+        .btn-download:hover {
+            background: #2980b9;
+        }
+        
+        .btn-edit-form {
+            background: #f39c12;
+        }
+        
+        .btn-edit-form:hover {
+            background: #d35400;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 60px;
+            }
+            
+            .main-content {
+                margin-left: 60px;
+            }
+            
+            .profile-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="trainer-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="#3aa9dd">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13.5v5.25l4.5 2.67-.75 1.23L9 13.5V6.5z"/>
+                </svg>
+            </div>
+            <div class="trainer-name">Coach AP</div>
+        </div>
+        
+        <nav class="sidebar-menu">
+            <a href="real-trainerize-dashboard.html" class="menu-item">
+                <i>📊</i>
+                <span class="menu-text">Dashboard</span>
+            </a>
+            <a href="/app/client/26604555/trainingProgram" class="menu-item" target="_blank" rel="noopener noreferrer">
+                <i>💪</i>
+                <span class="menu-text">Training Program</span>
+            </a>
+            <a href="/app/client/26604555/messages" class="menu-item" target="_blank" rel="noopener noreferrer">
+                <i>💬</i>
+                <span class="menu-text">Messages</span>
+            </a>
+            <a href="/app/client/26604555/userGroups" class="menu-item" target="_blank" rel="noopener noreferrer">
+                <i>👥</i>
+                <span class="menu-text">Groups</span>
+            </a>
+            <a href="/app/client/26604555/progress" class="menu-item" target="_blank" rel="noopener noreferrer">
+                <i>📈</i>
+                <span class="menu-text">Progress</span>
+            </a>
+            <a href="/app/client/26604555/badges" class="menu-item" target="_blank" rel="noopener noreferrer">
+                <i>🏆</i>
+                <span class="menu-text">Badges</span>
+            </a>
+            <a href="real-trainerize-dashboard.html" class="menu-item" onclick="showCalendar()">
+                <i>📅</i>
+                <span class="menu-text">Calendar</span>
+            </a>
+            <a href="/app/client/26604555/classes" class="menu-item" target="_blank" rel="noopener noreferrer">
+                <i>🏃</i>
+                <span class="menu-text">Classes</span>
+            </a>
+            <a href="#" class="menu-item active" onclick="showProfile()">
+                <i>👤</i>
+                <span class="menu-text">My Profile</span>
+            </a>
+        </nav>
+    </div>
+    
+    <div class="main-content">
+        <div class="top-bar">
+            <h1 class="page-title">My Profile</h1>
+            <div class="user-actions">
+                <button class="notification-btn" title="Notifications">
+                    <i>🔔</i>
+                </button>
+                <button class="user-profile" title="Profile">
+                    <i>👤</i>
+                </button>
+                <button class="logout-btn" onclick="logout()">
+                    <i>🚪</i> Logout
+                </button>
+            </div>
+        </div>
+        
+        <!-- Profile View -->
+        <div class="profile-card" id="profileView">
+            <div class="profile-header">
+                <h2 class="profile-title">Client Profile</h2>
+                <div class="profile-actions">
+                    <button class="btn-edit" onclick="editProfile()">Edit Profile</button>
+                    <button class="btn-edit" onclick="showIntakeForm()">Update Intake Form</button>
+                </div>
+            </div>
+            
+            <div class="profile-content">
+                <div class="profile-section">
+                    <h3 class="section-title">Personal Information</h3>
+                    <div class="section-content">
+                        <p><strong>Name:</strong> <span id="clientName">Loading...</span></p>
+                        <p><strong>Phone:</strong> <span id="clientPhone">Loading...</span></p>
+                        <p><strong>Email:</strong> <span id="clientEmail">Loading...</span></p>
+                        <p><strong>Date of Birth:</strong> <span id="clientDOB">Loading...</span></p>
+                        <p><strong>Age:</strong> <span id="clientAge">Loading...</span></p>
+                        <p><strong>Occupation:</strong> <span id="clientOccupation">Loading...</span></p>
+                    </div>
+                </div>
+                
+                <div class="profile-section">
+                    <h3 class="section-title">Emergency Contact</h3>
+                    <div class="section-content">
+                        <p><strong>Name:</strong> <span id="emergencyName">Loading...</span></p>
+                        <p><strong>Phone:</strong> <span id="emergencyPhone">Loading...</span></p>
+                        <p><strong>Relationship:</strong> <span id="emergencyRelation">Loading...</span></p>
+                    </div>
+                </div>
+                
+                <div class="profile-section">
+                    <h3 class="section-title">Health & Medical</h3>
+                    <div class="section-content">
+                        <p><strong>Medical Conditions:</strong> <span id="medicalConditions">Loading...</span></p>
+                        <p><strong>Medications:</strong> <span id="medications">Loading...</span></p>
+                        <p><strong>Injuries/Surgeries:</strong> <span id="injuries">Loading...</span></p>
+                        <p><strong>Allergies:</strong> <span id="allergies">Loading...</span></p>
+                        <p><strong>Fitness Level:</strong> <span id="fitnessLevel">Loading...</span></p>
+                    </div>
+                </div>
+                
+                <div class="profile-section">
+                    <h3 class="section-title">Goals & Preferences</h3>
+                    <div class="section-content">
+                        <p><strong>Primary Goal:</strong> <span id="primaryGoal">Loading...</span></p>
+                        <p><strong>Sessions/Week:</strong> <span id="sessionsPerWeek">Loading...</span></p>
+                        <p><strong>Preferred Time:</strong> <span id="preferredTime">Loading...</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Edit Profile Form -->
+        <div class="form-container" id="editProfileForm">
+            <div class="form-header">
+                <h2 class="form-title">Edit Profile</h2>
+                <button class="btn-cancel" onclick="cancelEdit()">Cancel</button>
+            </div>
+            
+            <div class="form-fields">
+                <div class="form-group">
+                    <label for="editName">Name</label>
+                    <input type="text" id="editName" placeholder="Enter your name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editPhone">Phone</label>
+                    <input type="tel" id="editPhone" placeholder="Enter your phone number">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editEmail">Email</label>
+                    <input type="email" id="editEmail" placeholder="Enter your email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editDOB">Date of Birth</label>
+                    <input type="date" id="editDOB">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editOccupation">Occupation</label>
+                    <input type="text" id="editOccupation" placeholder="Enter your occupation">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editEmergencyName">Emergency Contact Name</label>
+                    <input type="text" id="editEmergencyName" placeholder="Enter emergency contact name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editEmergencyPhone">Emergency Phone</label>
+                    <input type="tel" id="editEmergencyPhone" placeholder="Enter emergency phone number">
+                </div>
+                
+                <div class="form-group">
+                    <label for="editEmergencyRelation">Relationship</label>
+                    <input type="text" id="editEmergencyRelation" placeholder="Enter relationship">
+                </div>
+                
+                <div class="form-actions">
+                    <button class="btn-cancel" onclick="cancelEdit()">Cancel</button>
+                    <button class="btn-submit" onclick="saveProfile()">Save Changes</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Intake Form -->
+        <div class="form-container" id="intakeForm">
+            <div class="form-header">
+                <h2 class="form-title">Client Intake Form</h2>
+                <button class="btn-cancel" onclick="cancelIntakeForm()">Cancel</button>
+            </div>
+            
+            <div class="form-fields">
+                <div class="form-group">
+                    <label for="intakeMedicalConditions">Do you have any medical conditions?</label>
+                    <textarea id="intakeMedicalConditions" placeholder="Describe any medical conditions"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakeMedications">Are you taking any medications?</label>
+                    <textarea id="intakeMedications" placeholder="List any medications"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakeInjuries">Any injuries or past surgeries?</label>
+                    <textarea id="intakeInjuries" placeholder="Describe any injuries or surgeries"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakeAllergies">Do you have any allergies?</label>
+                    <textarea id="intakeAllergies" placeholder="List any allergies"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakeFitnessLevel">Current fitness level</label>
+                    <select id="intakeFitnessLevel">
+                        <option value="">Select fitness level</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakeExerciseHistory">Have you worked out before?</label>
+                    <textarea id="intakeExerciseHistory" placeholder="Describe your exercise history"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakeEquipmentAccess">Equipment access</label>
+                    <input type="text" id="intakeEquipmentAccess" placeholder="Describe equipment access">
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakePrimaryGoal">Primary goal</label>
+                    <input type="text" id="intakePrimaryGoal" placeholder="Describe your primary goal">
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakeSecondaryGoals">Secondary goals</label>
+                    <input type="text" id="intakeSecondaryGoals" placeholder="Describe secondary goals">
+                </div>
+                
+                <div class="form-group">
+                    <label for="intakeSessionsPerWeek">Sessions per week desired</label>
+                    <input type="number" id="intakeSessionsPerWeek" placeholder="Number of sessions per week">
+                </div>
+                
+                <div class="form-actions">
+                    <button class="btn-cancel" onclick="cancelIntakeForm()">Cancel</button>
+                    <button class="btn-submit" onclick="saveIntakeForm()">Save Intake Form</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Documents Section -->
+        <div class="documents-section">
+            <div class="documents-header">
+                <h2 class="documents-title">My Documents</h2>
+            </div>
+            
+            <div class="documents-list">
+                <div class="document-card">
+                    <div class="document-title">Client Intake Form</div>
+                    <div class="document-description">Initial assessment and health questionnaire</div>
+                    <div class="document-actions">
+                        <button class="btn-document btn-edit-form" onclick="showIntakeForm()">Edit</button>
+                        <button class="btn-document btn-download" onclick="downloadIntakeForm()">Download</button>
+                    </div>
+                </div>
+                
+                <div class="document-card">
+                    <div class="document-title">Training Program</div>
+                    <div class="document-description">Your personalized workout plan</div>
+                    <div class="document-actions">
+                        <button class="btn-document btn-download">View</button>
+                    </div>
+                </div>
+                
+                <div class="document-card">
+                    <div class="document-title">Nutrition Guide</div>
+                    <div class="document-description">Personalized nutrition recommendations</div>
+                    <div class="document-actions">
+                        <button class="btn-document btn-download">View</button>
+                    </div>
+                </div>
+                
+                <div class="document-card">
+                    <div class="document-title">Progress Tracking</div>
+                    <div class="document-description">Historical progress and achievements</div>
+                    <div class="document-actions">
+                        <button class="btn-document btn-download">View</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Set the client name from localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const userName = localStorage.getItem('currentUser') || 'Client';
+            document.querySelector('.trainer-name').textContent = userName;
+            
+            // Initialize with sample data for demo
+            loadSampleData();
+        });
+        
+        function loadSampleData() {
+            // For demo purposes, load sample data
+            document.getElementById('clientName').textContent = localStorage.getItem('currentUser') || 'John Doe';
+            document.getElementById('clientPhone').textContent = '(555) 123-4567';
+            document.getElementById('clientEmail').textContent = 'client@example.com';
+            document.getElementById('clientDOB').textContent = '01/15/1985';
+            document.getElementById('clientAge').textContent = '35';
+            document.getElementById('clientOccupation').textContent = 'Software Engineer';
+            
+            document.getElementById('emergencyName').textContent = 'Jane Doe';
+            document.getElementById('emergencyPhone').textContent = '(555) 987-6543';
+            document.getElementById('emergencyRelation').textContent = 'Spouse';
+            
+            document.getElementById('medicalConditions').textContent = 'None';
+            document.getElementById('medications').textContent = 'None';
+            document.getElementById('injuries').textContent = 'Previous knee injury (2020)';
+            document.getElementById('allergies').textContent = 'Penicillin';
+            document.getElementById('fitnessLevel').textContent = 'Intermediate';
+            
+            document.getElementById('primaryGoal').textContent = 'Weight Loss';
+            document.getElementById('sessionsPerWeek').textContent = '3';
+            document.getElementById('preferredTime').textContent = 'Morning (7-9 AM)';
+        }
+        
+        function editProfile() {
+            // Populate edit form with current values
+            document.getElementById('editName').value = document.getElementById('clientName').textContent;
+            document.getElementById('editPhone').value = document.getElementById('clientPhone').textContent;
+            document.getElementById('editEmail').value = document.getElementById('clientEmail').textContent;
+            
+            // Show edit form, hide profile view
+            document.getElementById('profileView').style.display = 'none';
+            document.getElementById('editProfileForm').style.display = 'block';
+        }
+        
+        function cancelEdit() {
+            // Hide edit form, show profile view
+            document.getElementById('editProfileForm').style.display = 'none';
+            document.getElementById('profileView').style.display = 'block';
+        }
+        
+        function saveProfile() {
+            // Update profile with edited values
+            document.getElementById('clientName').textContent = document.getElementById('editName').value;
+            document.getElementById('clientPhone').textContent = document.getElementById('editPhone').value;
+            document.getElementById('clientEmail').textContent = document.getElementById('editEmail').value;
+            
+            // For demo, also update DOB if entered
+            if (document.getElementById('editDOB').value) {
+                const dob = new Date(document.getElementById('editDOB').value);
+                document.getElementById('clientDOB').textContent = dob.toLocaleDateString();
+                
+                // Calculate age
+                const today = new Date();
+                const age = today.getFullYear() - dob.getFullYear();
+                document.getElementById('clientAge').textContent = age;
+            }
+            
+            document.getElementById('clientOccupation').textContent = document.getElementById('editOccupation').value;
+            document.getElementById('emergencyName').textContent = document.getElementById('editEmergencyName').value;
+            document.getElementById('emergencyPhone').textContent = document.getElementById('editEmergencyPhone').value;
+            document.getElementById('emergencyRelation').textContent = document.getElementById('editEmergencyRelation').value;
+            
+            // Show success message
+            alert('Profile updated successfully!');
+            
+            // Hide edit form, show profile view
+            document.getElementById('editProfileForm').style.display = 'none';
+            document.getElementById('profileView').style.display = 'block';
+        }
+        
+        function showIntakeForm() {
+            // Show intake form, hide profile view
+            document.getElementById('profileView').style.display = 'none';
+            document.getElementById('intakeForm').style.display = 'block';
+        }
+        
+        function cancelIntakeForm() {
+            // Hide intake form, show profile view
+            document.getElementById('intakeForm').style.display = 'none';
+            document.getElementById('profileView').style.display = 'block';
+        }
+        
+        function saveIntakeForm() {
+            // Update profile with intake form values
+            document.getElementById('medicalConditions').textContent = document.getElementById('intakeMedicalConditions').value || 'None';
+            document.getElementById('medications').textContent = document.getElementById('intakeMedications').value || 'None';
+            document.getElementById('injuries').textContent = document.getElementById('intakeInjuries').value || 'None';
+            document.getElementById('allergies').textContent = document.getElementById('intakeAllergies').value || 'None';
+            document.getElementById('fitnessLevel').textContent = document.getElementById('intakeFitnessLevel').value || 'Not specified';
+            document.getElementById('primaryGoal').textContent = document.getElementById('intakePrimaryGoal').value || 'Not specified';
+            document.getElementById('sessionsPerWeek').textContent = document.getElementById('intakeSessionsPerWeek').value || '0';
+            
+            // Show success message
+            alert('Intake form updated successfully!');
+            
+            // Hide intake form, show profile view
+            document.getElementById('intakeForm').style.display = 'none';
+            document.getElementById('profileView').style.display = 'block';
+        }
+        
+        function downloadIntakeForm() {
+            alert('Downloading intake form...');
+            // In a real implementation, this would download the actual form
+        }
+        
+        function showCalendar() {
+            // Redirect to calendar view
+            window.location.href = 'real-trainerize-dashboard.html';
+            // Then trigger calendar view
+            setTimeout(() => {
+                const event = new Event('calendarRequested');
+                document.dispatchEvent(event);
+            }, 100);
+        }
+        
+        function showProfile() {
+            // Make sure profile is active
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+        }
+        
+        function logout() {
+            // Clear authentication token
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('currentUser');
+            
+            // Redirect to login
+            window.location.href = 'login.html';
+        }
+        
+        // Check if user is authenticated
+        function checkAuth() {
+            if (!localStorage.getItem('authToken')) {
+                window.location.href = 'login.html';
+            }
+        }
+        
+        // Run auth check
+        checkAuth();
+    </script>
+</body>
+</html>
